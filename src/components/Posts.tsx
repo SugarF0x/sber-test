@@ -21,7 +21,8 @@ interface IWrapProps {
 
 }
 interface IWrapState {
-  posts: IPost[]
+  posts: IPost[],
+  favorites: string[]
 }
 interface IPostProps {
   post: IPost,
@@ -35,7 +36,12 @@ export default class Wrapper extends React.Component<IWrapProps, IWrapState> {
   constructor(props: IWrapProps) {
     super(props);
     this.state = {
-      posts: []
+      posts: [],
+      /**
+       * this ignore is here since inline condition already checks for null
+       */
+      // @ts-ignore
+      favorites: localStorage.getItem('favs') ? JSON.parse(localStorage.getItem('favs')) : []
     };
   }
 
@@ -717,7 +723,7 @@ export default class Wrapper extends React.Component<IWrapProps, IWrapState> {
       <div>
         <h1>Posts from GitHub</h1>
         {this.state.posts.map((entry: IPost) => (
-          <Post key={entry.id} post={entry} favorite={false}/>
+          <Post key={entry.id} post={entry} favorite={this.state.favorites.indexOf(entry.id) !== -1}/>
         ))}
       </div>
     )
