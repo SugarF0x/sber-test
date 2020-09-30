@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {
   Card, CardActions, CardContent, CardHeader, IconButton
 } from '@material-ui/core'
@@ -36,7 +35,7 @@ export default class Wrapper extends React.Component<IWrapProps, IWrapState> {
     super(props);
     this.state = {
       posts: []
-    } as IWrapState;
+    };
   }
 
   componentDidMount() {
@@ -729,7 +728,8 @@ class Post extends React.Component<IPostProps, IPostState> {
     super(props);
     this.state = {
       fav: false
-    }
+    };
+    this.favoriteAction = this.favoriteAction.bind(this);
   };
 
   card = {
@@ -748,6 +748,12 @@ class Post extends React.Component<IPostProps, IPostState> {
     } else return str.slice(start+3,end)
   }
 
+  favoriteAction() {
+    this.setState({
+      fav: !this.state.fav
+    })
+  }
+
   render() {
     return (
       <Card style={this.card} variant="outlined">
@@ -756,7 +762,7 @@ class Post extends React.Component<IPostProps, IPostState> {
           {this.trimContent(this.props.post.description)}
         </CardContent>
         <CardActions style={this.favorite}>
-          <IconButton aria-label="add to favorites">
+          <IconButton aria-label="add to favorites" onClick={this.favoriteAction}>
             <FavoriteIcon color={this.state.fav ? 'secondary' : 'action'}/>
           </IconButton>
         </CardActions>
