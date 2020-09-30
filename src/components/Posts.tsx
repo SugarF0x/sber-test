@@ -24,7 +24,8 @@ interface IWrapState {
   posts: IPost[]
 }
 interface IPostProps {
-  post: IPost
+  post: IPost,
+  favorite: boolean
 }
 interface IPostState {
   fav: boolean
@@ -716,7 +717,7 @@ export default class Wrapper extends React.Component<IWrapProps, IWrapState> {
       <div>
         <h1>Posts from GitHub</h1>
         {this.state.posts.map((entry: IPost) => (
-          <Post key={entry.id} post={entry}/>
+          <Post key={entry.id} post={entry} favorite={false}/>
         ))}
       </div>
     )
@@ -727,7 +728,7 @@ class Post extends React.Component<IPostProps, IPostState> {
   constructor(props: IPostProps) {
     super(props);
     this.state = {
-      fav: false
+      fav: props.favorite
     };
     this.favoriteAction = this.favoriteAction.bind(this);
   };
@@ -740,6 +741,8 @@ class Post extends React.Component<IPostProps, IPostState> {
     justifyContent: 'flex-end'
   }
 
+  // util functions
+
   trimContent(str: string): string {
     let start = str.indexOf('<p>');
     let end = str.indexOf('</p>');
@@ -748,7 +751,32 @@ class Post extends React.Component<IPostProps, IPostState> {
     } else return str.slice(start+3,end)
   }
 
+  removeIndex(arr: string[], i: number) {
+    delete arr[i];
+    arr = arr.filter((element: string | undefined) => {
+      return element !== undefined
+    });
+    return arr;
+  }
+
+  // bound functions
+
   favoriteAction() {
+    let favs = [];
+    let storage = localStorage.getItem('favs');
+    if (storage) favs = JSON.parse(storage);
+
+    if (!this.state.fav) { // add to favs
+      favs.push(this.props.post.id);
+    } else { // remove from favs
+      favs = this.removeIndex(favs, favs.indexOf(this.props.post.id))
+    }
+
+    if (favs[0])
+      localStorage.setItem('favs',JSON.stringify(favs));
+    else
+      localStorage.removeItem('favs');
+
     this.setState({
       fav: !this.state.fav
     })
