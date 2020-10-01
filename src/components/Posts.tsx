@@ -5,7 +5,7 @@ import Post from './Post';
 import { connect }       from "react-redux";
 import { getDummyPosts } from "../store/actions";
 
-import { IPost, IRootState } from '../store/types';
+import { IPost, IRootState, TStatus } from '../store/types';
 
 interface IWrapProps {
   posts: IPost[],
@@ -13,7 +13,10 @@ interface IWrapProps {
 }
 
 interface IWrapState {
-  posts: IPost[],
+  posts: {
+    array:  IPost[],
+    status: TStatus
+  },
   favorites: string[]
 }
 
@@ -61,7 +64,8 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
 }
 
 const mapStateToProps    = (state: IRootState) => ({
-  posts: state.posts as IPost[],
+  posts:  state.posts.array  as IPost[],
+  status: state.posts.status as TStatus,
 });
 const mapDispatchToProps = {
   getDummyPosts,

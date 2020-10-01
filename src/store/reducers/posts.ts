@@ -1,6 +1,9 @@
 import { IAction, IPost } from "../types";
 
-const defaultPosts = [] as IPost[];
+const defaultPosts = {
+  status: 'idle',
+  array: [] as IPost[]
+};
 
 const dummyData = [
   {

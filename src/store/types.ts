@@ -12,12 +12,17 @@ export interface IPost {
   company_logo: any
 }
 
+export type TStatus = 'idle' | 'fetching' | 'error';
+
 export interface IAction {
   type: string
   data?: any
 }
 
 export interface IRootState {
-  posts: IPost[],
+  posts: {
+    status: TStatus,
+    array: IPost[]
+  },
   favorites: string[]
 }
