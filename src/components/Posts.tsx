@@ -1,24 +1,17 @@
 import React from 'react'
+import { connect } from "react-redux";
+import { getDummyPosts } from "../store/actions";
+
+import { IPost, IRootState } from '../store/types';
+
 import {
   Card, CardActions, CardContent, CardHeader, IconButton
 } from '@material-ui/core'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-interface IPost {
-  id: string,
-  type: string,
-  url: string,
-  created_at: string, // can be turned to date
-  company: string,
-  company_url: string,
-  location: string,
-  title: string,
-  description: string, // can be used as elements
-  how_to_apply: string, // can be used as elements
-  company_logo: any
-}
 interface IWrapProps {
-
+  posts: IPost[],
+  getDummyPosts: Function
 }
 interface IWrapState {
   posts: IPost[],
@@ -32,36 +25,41 @@ interface IPostState {
   fav: boolean
 }
 
-export default class Wrapper extends React.Component<IWrapProps, IWrapState> {
-  constructor(props: IWrapProps) {
-    super(props);
-    this.state = {
-      posts: [],
-      /**
-       * this ignore is here since inline condition already checks for null
-       */
-      // @ts-ignore
-      favorites: localStorage.getItem('favs') ? JSON.parse(localStorage.getItem('favs')) : []
-    };
-  }
+class Wrapper extends React.Component<IWrapProps, IWrapState> {
+  // constructor(props: IWrapProps) {
+  //   super(props);
+  //   this.state = {
+  //     posts: useSelector((state: IRootState) => state.posts),
+  //     /**
+  //      * this ignore is here since inline condition already checks for null
+  //      */
+  //     // @ts-ignore
+  //     favorites: localStorage.getItem('favs') ? JSON.parse(localStorage.getItem('favs')) : []
+  //   };
+  // }
 
   componentDidMount() {
-    fetch('https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json', {headers: {origin: 'http://localhost:3000'}})
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          posts: res
-        })
-      })
+    // fetch('https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json', {headers: {origin: 'http://localhost:3000'}})
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     this.setState({
+    //       posts: res
+    //     })
+    //   })
   }
 
   render() {
     return (
       <div>
         <h1>Posts from GitHub</h1>
-        {this.state.posts.map((entry: IPost) => (
-          <Post key={entry.id} post={entry} favorite={this.state.favorites.indexOf(entry.id) !== -1}/>
-        ))}
+        { this.props.posts.length === 0
+          ? <div>
+              <h3>There are currently no posts here</h3>
+              <button onClick={() => {this.props.getDummyPosts()}}>Get dummy data</button>
+            </div>
+          : this.props.posts.map((entry: IPost) => (
+              <Post key={ entry.id } post={ entry } favorite={ false }/>
+          )) }
       </div>
     )
   }
@@ -141,3 +139,12 @@ class Post extends React.Component<IPostProps, IPostState> {
     )
   }
 }
+
+const mapStateToProps = (state: IRootState) => ({
+  posts: state.posts as IPost[]
+})
+const mapDispatchToProps = {
+  getDummyPosts
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Wrapper)
