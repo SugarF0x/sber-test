@@ -1,8 +1,8 @@
 import { IAction, IPost } from "../types";
 
 const defaultPosts = {
-  status: 'idle',
-  array: [] as IPost[]
+  status: 'success',
+  array:  [] as IPost[],
 };
 
 const dummyData = [
@@ -24,7 +24,13 @@ const dummyData = [
 export default (state = defaultPosts, action: IAction) => {
   switch (action.type) {
     case 'GET_DUMMY_POSTS':
-      return dummyData;
+      return { status: 'success', array: dummyData };
+    case 'FETCH_POSTS_START':
+      return { status: 'fetching', array: [] };
+    case 'FETCH_POSTS_ERROR':
+      return { status: 'error', array: [] };
+    case 'FETCH_POSTS_SUCCESS':
+      return { status: 'success', array: action.data };
     default:
       return state;
   }

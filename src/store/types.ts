@@ -12,7 +12,7 @@ export interface IPost {
   company_logo: any
 }
 
-export type TStatus = 'idle' | 'fetching' | 'error';
+export type TStatus = 'fetching' | 'success' | 'error';
 
 export interface IAction {
   type: string

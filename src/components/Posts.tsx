@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Post from './Post';
+import Post      from './Post';
+import SearchBar from './SearchBar';
 
 import { connect }       from "react-redux";
 import { getDummyPosts } from "../store/actions";
@@ -8,16 +9,14 @@ import { getDummyPosts } from "../store/actions";
 import { IPost, IRootState, TStatus } from '../store/types';
 
 interface IWrapProps {
-  posts: IPost[],
-  getDummyPosts: Function
+  posts: IPost[];
+  status: TStatus;
+  getDummyPosts: Function;
 }
 
 interface IWrapState {
-  posts: {
-    array:  IPost[],
-    status: TStatus
-  },
-  favorites: string[]
+  posts: IPost[];
+  favorites: string[];
 }
 
 class Wrapper extends React.Component<IWrapProps, IWrapState> {
@@ -47,24 +46,31 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
     return (
       <div>
         <h1>Posts from GitHub</h1>
-        { this.props.posts.length === 0
-          ? <div>
-            <h3>There are currently no posts here</h3>
-            <button onClick={ () => {
-              this.props.getDummyPosts();
-            } }>Get dummy data
-            </button>
-          </div>
-          : this.props.posts.map((entry: IPost) => (
-            <Post key={ entry.id } post={ entry } favorite={ false }/>
-          )) }
+        <SearchBar/>
+        { this.props.status === 'success'
+          ? this.props.posts.length === 0
+            ? <div>
+              <h3>There are currently no posts here</h3>
+              <button onClick={ () => {
+                this.props.getDummyPosts();
+              } }>
+                Get dummy data
+              </button>
+            </div>
+            : this.props.posts.map((entry: IPost) => (
+              <Post key={ entry.id } post={ entry } favorite={ false }/>
+            ))
+          : this.props.status === 'fetching'
+            ? <h3>Fetching data...</h3>
+            : <h3>Oops!.. Something went wrong!</h3>
+        }
       </div>
     );
   }
 }
 
 const mapStateToProps    = (state: IRootState) => ({
-  posts:  state.posts.array  as IPost[],
+  posts:  state.posts.array as IPost[],
   status: state.posts.status as TStatus,
 });
 const mapDispatchToProps = {
