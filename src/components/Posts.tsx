@@ -1,4 +1,6 @@
-import React from 'react';
+import React      from 'react';
+
+import { Button } from "@material-ui/core";
 
 import Post      from './Post';
 import SearchBar from './SearchBar';
@@ -51,11 +53,15 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
           ? this.props.posts.length === 0
             ? <div>
               <h3>There are currently no posts here</h3>
-              <button onClick={ () => {
-                this.props.getDummyPosts();
-              } }>
+              <Button style={ { margin: '1rem' } }
+                      variant="contained"
+                      color="primary"
+                      onClick={ () => {
+                        this.props.getDummyPosts();
+                      } }
+              >
                 Get dummy data
-              </button>
+              </Button>
             </div>
             : this.props.posts.map((entry: IPost) => (
               <Post key={ entry.id } post={ entry } favorite={ false }/>
