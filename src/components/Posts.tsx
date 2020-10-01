@@ -62,7 +62,9 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
             ))
           : this.props.status === 'fetching'
             ? <h3>Fetching data...</h3>
-            : <h3>Oops!.. Something went wrong!</h3>
+            : this.props.status === 'not_found'
+              ? <h3>No search results found for this query</h3>
+              : <h3>Oops!.. Something went wrong!</h3>
         }
       </div>
     );

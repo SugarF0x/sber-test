@@ -31,6 +31,8 @@ export default (state = defaultPosts, action: IAction) => {
       return { status: 'error', array: [] };
     case 'FETCH_POSTS_SUCCESS':
       return { status: 'success', array: action.data };
+    case 'FETCH_POSTS_404':
+      return { status: 'not_found' };
     default:
       return state;
   }

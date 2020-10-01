@@ -21,6 +21,10 @@ export function getPostsByQuery(status: TStatus, data?: IPost[]): IAction {
         type: 'FETCH_POSTS_SUCCESS',
         data,
       };
+    case "not_found":
+      return {
+        type: 'FETCH_POSTS_404',
+      };
   }
 }
 

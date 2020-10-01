@@ -12,7 +12,7 @@ export interface IPost {
   company_logo: any
 }
 
-export type TStatus = 'fetching' | 'success' | 'error';
+export type TStatus = 'fetching' | 'success' | 'error' | 'not_found';
 
 export interface IAction {
   type: string

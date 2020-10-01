@@ -37,7 +37,10 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
       { headers: { origin: 'http://localhost:3000' } })
       .then(res => res.json())
       .then(res => {
-        this.props.getPostsByQuery('success', res);
+        if (res.length > 0)
+          this.props.getPostsByQuery('success', res);
+        else
+          this.props.getPostsByQuery('not_found');
       })
       .catch(() => {
         this.props.getPostsByQuery('error');
