@@ -1,6 +1,6 @@
-import React      from 'react';
+import React from 'react';
 
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 
 import Post      from './Post';
 import SearchBar from './SearchBar';
@@ -68,7 +68,10 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
               <Post key={ entry.id } post={ entry } favorite={ this.props.favorites.indexOf(entry.id) !== -1 }/>
             ))
           : this.props.status === 'fetching'
-            ? <h3>Fetching data...</h3>
+            ? <div>
+              <h3>Fetching data...</h3>
+              <CircularProgress/>
+            </div>
             : this.props.status === 'not_found'
               ? <h3>No search results found for this query</h3>
               : <h3>Oops!.. Something went wrong!</h3>
