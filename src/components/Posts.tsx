@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 import Post from './Post';
 
-import { connect } from "react-redux";
+import { connect }       from "react-redux";
 import { getDummyPosts } from "../store/actions";
 
 import { IPost, IRootState } from '../store/types';
@@ -11,6 +11,7 @@ interface IWrapProps {
   posts: IPost[],
   getDummyPosts: Function
 }
+
 interface IWrapState {
   posts: IPost[],
   favorites: string[]
@@ -45,22 +46,25 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
         <h1>Posts from GitHub</h1>
         { this.props.posts.length === 0
           ? <div>
-              <h3>There are currently no posts here</h3>
-              <button onClick={() => {this.props.getDummyPosts()}}>Get dummy data</button>
-            </div>
+            <h3>There are currently no posts here</h3>
+            <button onClick={ () => {
+              this.props.getDummyPosts();
+            } }>Get dummy data
+            </button>
+          </div>
           : this.props.posts.map((entry: IPost) => (
-              <Post key={ entry.id } post={ entry } favorite={ false }/>
+            <Post key={ entry.id } post={ entry } favorite={ false }/>
           )) }
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state: IRootState) => ({
-  posts: state.posts as IPost[]
-})
+const mapStateToProps    = (state: IRootState) => ({
+  posts: state.posts as IPost[],
+});
 const mapDispatchToProps = {
-  getDummyPosts
-}
+  getDummyPosts,
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(Wrapper)
+export default connect(mapStateToProps, mapDispatchToProps)(Wrapper);

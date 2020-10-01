@@ -11,10 +11,12 @@ export interface IPost {
   how_to_apply: string, // can be used as elements
   company_logo: any
 }
+
 export interface IAction {
   type: string
   data?: any
 }
+
 export interface IRootState {
   posts: IPost[],
   favorites: string[]
