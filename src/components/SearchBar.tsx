@@ -3,10 +3,12 @@ import React from 'react';
 import { connect }         from "react-redux";
 import { getPostsByQuery } from "../store/actions";
 
-import { Input, Button } from '@material-ui/core';
+import { Input, Button }              from '@material-ui/core';
+import { IPost, IRootState } from "../store/types";
 
 interface ISearchProps {
-  getPostsByQuery: Function
+  favorites: string[];
+  getPostsByQuery: Function;
 }
 
 interface ISearchState {
@@ -30,21 +32,39 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
     },
   };
 
-  searchHandler() {
+  searchHandler(fav?: string) {
     this.props.getPostsByQuery('fetching');
 
-    fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json?description=${ this.state.description }&location=${ this.state.location }`,
-      { headers: { origin: 'http://localhost:3000' } })
-      .then(res => res.json())
-      .then(res => {
-        if (res.length > 0)
-          this.props.getPostsByQuery('success', res);
-        else
-          this.props.getPostsByQuery('not_found');
-      })
-      .catch(() => {
-        this.props.getPostsByQuery('error');
+    if (fav === 'fav') {
+      let favorites = [] as IPost[];
+      this.props.favorites.forEach( entry => {
+        fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions/${entry}.json`,
+          { headers: { origin: 'http://localhost:3000' } })
+          .then(res => res.json())
+          .then(res => {
+            favorites.push(res);
+            if (favorites.length === this.props.favorites.length) {
+              this.props.getPostsByQuery('success', favorites);
+            }
+          })
+          .catch(() => {
+            this.props.getPostsByQuery('error');
+          });
       });
+    } else {
+      fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json?description=${ this.state.description }&location=${ this.state.location }`,
+        { headers: { origin: 'http://localhost:3000' } })
+        .then(res => res.json())
+        .then(res => {
+          if (res.length > 0)
+            this.props.getPostsByQuery('success', res);
+          else
+            this.props.getPostsByQuery('not_found');
+        })
+        .catch(() => {
+          this.props.getPostsByQuery('error');
+        });
+    }
   }
 
   enterHandler(e: any) {
@@ -81,13 +101,26 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
         >
           Get data
         </Button>
+        <Button style={ { margin: '1rem' } }
+                variant="contained"
+                color="primary"
+                onClick={ () => {
+                  this.searchHandler('fav');
+                } }
+                disabled={ this.props.favorites.length === 0 }
+        >
+          Get favorites
+        </Button>
       </div>
     );
   }
 }
 
+const mapStateToProps    = (state: IRootState) => ({
+  favorites: state.favorites as string[],
+});
 const mapDispatchToProps = {
   getPostsByQuery,
 };
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
