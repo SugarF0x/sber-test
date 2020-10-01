@@ -28,7 +28,7 @@ export function getPostsByQuery(status: TStatus, data?: IPost[]): IAction {
   }
 }
 
-export function favorite(id: string): IAction {
+export function setFavorite(id: string): IAction {
   return {
     type: 'FAVORITE',
     data: id,

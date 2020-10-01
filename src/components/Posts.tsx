@@ -13,6 +13,7 @@ import { IPost, IRootState, TStatus } from '../store/types';
 interface IWrapProps {
   posts: IPost[];
   status: TStatus;
+  favorites: string[];
   getDummyPosts: Function;
 }
 
@@ -64,7 +65,7 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
               </Button>
             </div>
             : this.props.posts.map((entry: IPost) => (
-              <Post key={ entry.id } post={ entry } favorite={ false }/>
+              <Post key={ entry.id } post={ entry } favorite={ this.props.favorites.indexOf(entry.id) !== -1 }/>
             ))
           : this.props.status === 'fetching'
             ? <h3>Fetching data...</h3>
@@ -78,8 +79,9 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
 }
 
 const mapStateToProps    = (state: IRootState) => ({
-  posts:  state.posts.array as IPost[],
-  status: state.posts.status as TStatus,
+  posts:     state.posts.array as IPost[],
+  status:    state.posts.status as TStatus,
+  favorites: state.favorites as string[],
 });
 const mapDispatchToProps = {
   getDummyPosts,

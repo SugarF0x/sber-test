@@ -1,6 +1,9 @@
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import React        from "react";
 
+import { connect }     from "react-redux";
+import { setFavorite } from "../store/actions";
+
 import {
   Card,
   CardActions,
@@ -12,26 +15,25 @@ import {
 import { IPost } from "../store/types";
 
 interface IPostProps {
-  post: IPost,
-  favorite: boolean
-}
-interface IPostState {
-  fav: boolean
+  post: IPost;
+  favorite: boolean;
+  setFavorite: Function;
 }
 
-export default class Post extends React.Component<IPostProps, IPostState> {
+interface IPostState {
+  fav: boolean;
+}
+
+class Post extends React.Component<IPostProps, IPostState> {
   constructor(props: IPostProps) {
     super(props);
-    this.state          = {
-      fav: props.favorite,
-    };
     this.favoriteAction = this.favoriteAction.bind(this);
   };
 
   card     = {
     margin: '1rem',
   };
-  favorite = {
+  favoriteButton = {
     display:        'flex',
     justifyContent: 'flex-end',
   };
@@ -46,35 +48,10 @@ export default class Post extends React.Component<IPostProps, IPostState> {
     } else return str.slice(start + 3, end);
   }
 
-  removeIndex(arr: string[], i: number) {
-    delete arr[i];
-    arr = arr.filter((element: string | undefined) => {
-      return element !== undefined;
-    });
-    return arr;
-  }
-
   // bound functions
 
   favoriteAction() {
-    let favs    = [];
-    let storage = localStorage.getItem('favs');
-    if (storage) favs = JSON.parse(storage);
-
-    if (!this.state.fav) { // add to favs
-      favs.push(this.props.post.id);
-    } else { // remove from favs
-      favs = this.removeIndex(favs, favs.indexOf(this.props.post.id));
-    }
-
-    if (favs[0])
-      localStorage.setItem('favs', JSON.stringify(favs));
-    else
-      localStorage.removeItem('favs');
-
-    this.setState({
-      fav: !this.state.fav,
-    });
+    this.props.setFavorite(this.props.post.id)
   }
 
   render() {
@@ -84,9 +61,9 @@ export default class Post extends React.Component<IPostProps, IPostState> {
         <CardContent>
           { this.trimContent(this.props.post.description) }
         </CardContent>
-        <CardActions style={ this.favorite }>
+        <CardActions style={ this.favoriteButton }>
           <IconButton aria-label="add to favorites" onClick={ this.favoriteAction }>
-            <FavoriteIcon color={ this.state.fav
+            <FavoriteIcon color={ this.props.favorite
                                   ? 'secondary'
                                   : 'action' }/>
           </IconButton>
@@ -95,3 +72,9 @@ export default class Post extends React.Component<IPostProps, IPostState> {
     );
   }
 }
+
+const mapDispatchToProps = {
+  setFavorite,
+};
+
+export default connect(null, mapDispatchToProps)(Post);
