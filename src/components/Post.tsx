@@ -25,11 +25,6 @@ interface IPostState {
 }
 
 class Post extends React.Component<IPostProps, IPostState> {
-  constructor(props: IPostProps) {
-    super(props);
-    this.favoriteAction = this.favoriteAction.bind(this);
-  };
-
   card     = {
     margin: '1rem',
   };
@@ -50,7 +45,7 @@ class Post extends React.Component<IPostProps, IPostState> {
 
   // bound functions
 
-  favoriteAction() {
+  favoriteAction = () => {
     this.props.setFavorite(this.props.post.id)
   }
 
