@@ -30,7 +30,7 @@ class Post extends React.Component<IPostProps, IPostState> {
   };
   favoriteButton = {
     display:        'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   };
 
   // util functions
@@ -41,6 +41,18 @@ class Post extends React.Component<IPostProps, IPostState> {
     if (str.slice(start + 3, end).indexOf('<') !== -1) {
       return this.trimContent(str.slice(end + 3));
     } else return str.slice(start + 3, end);
+  }
+
+  formatDate(str: string): string {
+    let date  = new Date(str);
+
+    let day   = date.getDay().toString().length === 1 ? `0${date.getDay()}` : date.getDay();
+    let month = date.getMonth().toString().length === 1 ? `0${date.getMonth()}` : date.getMonth();
+    let year  = date.getFullYear();
+    let hour  = date.getHours().toString().length === 1 ? `0${date.getHours()}` : date.getHours();
+    let mins  = date.getMinutes().toString().length === 1 ? `0${date.getMinutes()}` : date.getMinutes();
+
+    return `${day}.${month}.${year} at ${hour}:${mins}`
   }
 
   // bound functions
@@ -57,6 +69,7 @@ class Post extends React.Component<IPostProps, IPostState> {
           { this.trimContent(this.props.post.description) }
         </CardContent>
         <CardActions style={ this.favoriteButton }>
+          <span>{ this.formatDate(this.props.post.created_at) }</span>
           <IconButton aria-label="add to favorites" onClick={ this.favoriteAction }>
             <FavoriteIcon color={ this.props.favorite ? 'secondary' : 'action' }/>
           </IconButton>
