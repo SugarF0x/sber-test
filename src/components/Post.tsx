@@ -63,9 +63,7 @@ class Post extends React.Component<IPostProps, IPostState> {
         </CardContent>
         <CardActions style={ this.favoriteButton }>
           <IconButton aria-label="add to favorites" onClick={ this.favoriteAction }>
-            <FavoriteIcon color={ this.props.favorite
-                                  ? 'secondary'
-                                  : 'action' }/>
+            <FavoriteIcon color={ this.props.favorite ? 'secondary' : 'action' }/>
           </IconButton>
         </CardActions>
       </Card>
