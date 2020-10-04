@@ -95,6 +95,10 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
                 variant="contained"
                 color="primary"
                 onClick={ () => {
+                  /**
+                   * these functions can't be fixed as typsecript considers them unasignable
+                   * this will not be an issue with regular js
+                   */
                   this.searchHandler();
                 } }
                 disabled={ !(this.state.location || this.state.description) }
@@ -105,6 +109,10 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
                 variant="contained"
                 color="primary"
                 onClick={ () => {
+                  /**
+                   * these functions can't be fixed as typsecript considers them unasignable
+                   * this will not be an issue with regular js
+                   */
                   this.searchHandler('fav');
                 } }
                 disabled={ this.props.favorites.length === 0 }

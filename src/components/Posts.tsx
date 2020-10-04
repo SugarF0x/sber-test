@@ -23,28 +23,6 @@ interface IWrapState {
 }
 
 class Wrapper extends React.Component<IWrapProps, IWrapState> {
-  // constructor(props: IWrapProps) {
-  //   super(props);
-  //   this.state = {
-  //     posts: useSelector((state: IRootState) => state.posts),
-  //     /**
-  //      * this ignore is here since inline condition already checks for null
-  //      */
-  //     // @ts-ignore
-  //     favorites: localStorage.getItem('favs') ? JSON.parse(localStorage.getItem('favs')) : []
-  //   };
-  // }
-
-  componentDidMount() {
-    // fetch('https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json', {headers: {origin: 'http://localhost:3000'}})
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     this.setState({
-    //       posts: res
-    //     })
-    //   })
-  }
-
   render() {
     return (
       <div>
@@ -57,9 +35,7 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
               <Button style={ { margin: '1rem' } }
                       variant="contained"
                       color="primary"
-                      onClick={ () => {
-                        this.props.getDummyPosts();
-                      } }
+                      onClick={ this.props.getDummyPosts() }
               >
                 Get dummy data
               </Button>
