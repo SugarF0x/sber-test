@@ -1,9 +1,10 @@
-import { IAction, IPost } from "../types";
+import { IAction, IPost, IRootPosts } from "../types";
 
 const defaultPosts = {
   status: 'success',
   array:  [] as IPost[],
-};
+  filter: ''
+} as IRootPosts;
 
 const dummyData = [
   {
@@ -22,17 +23,21 @@ const dummyData = [
 ] as IPost[];
 
 export default (state = defaultPosts, action: IAction) => {
+  function mutateState(toMutate: { status?: string, array?: IPost[], filter?:string }): IRootPosts {
+    return Object.assign({}, state, toMutate)
+  }
+
   switch (action.type) {
     case 'GET_DUMMY_POSTS':
-      return { status: 'success', array: dummyData };
+      return mutateState({ status: 'success', array: dummyData, filter: '' });
     case 'FETCH_POSTS_START':
-      return { status: 'fetching', array: [] };
+      return mutateState({ status: 'fetching', filter: action.data.filter });
     case 'FETCH_POSTS_ERROR':
-      return { status: 'error', array: [] };
+      return mutateState({ status: 'error' });
     case 'FETCH_POSTS_SUCCESS':
-      return { status: 'success', array: action.data };
+      return mutateState({ status: 'success', array: action.data.posts, filter: action.data.filter });
     case 'FETCH_POSTS_404':
-      return { status: 'not_found' };
+      return mutateState({ status: 'not_found', filter: action.data.filter })
     default:
       return state;
   }

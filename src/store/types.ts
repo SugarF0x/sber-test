@@ -19,10 +19,13 @@ export interface IAction {
   data?: any
 }
 
+export interface IRootPosts {
+  filter: string;
+  status: TStatus,
+  array: IPost[]
+}
+
 export interface IRootState {
-  posts: {
-    status: TStatus,
-    array: IPost[]
-  },
+  posts: IRootPosts,
   favorites: string[]
 }

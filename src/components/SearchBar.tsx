@@ -9,6 +9,7 @@ import { IPost, IRootState } from "../store/types";
 interface ISearchProps {
   favorites: string[];
   getPostsByQuery: Function;
+  filter: string;
 }
 
 interface ISearchState {
@@ -32,8 +33,12 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
     },
   };
 
-  searchHandler(fav?: string) {
-    this.props.getPostsByQuery('fetching');
+  joinFilter = (): string => {
+    return `${this.state.description}-${this.state.location}`
+  }
+
+  searchHandler = (fav?: string) => {
+    this.props.getPostsByQuery('fetching', { filter: this.joinFilter() });
 
     if (fav === 'fav') {
       let favorites = [] as IPost[];
@@ -57,9 +62,9 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
         .then(res => res.json())
         .then(res => {
           if (res.length > 0)
-            this.props.getPostsByQuery('success', res);
+            this.props.getPostsByQuery('success', { posts: res, filter: this.joinFilter() });
           else
-            this.props.getPostsByQuery('not_found');
+            this.props.getPostsByQuery('not_found', { filter: this.joinFilter() });
         })
         .catch(() => {
           this.props.getPostsByQuery('error');
@@ -67,7 +72,7 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
     }
   }
 
-  enterHandler(e: any) {
+  enterHandler = (e: any) => {
     if (e.key === 'Enter' && (this.state.location || this.state.description))
       this.searchHandler();
   }
@@ -101,7 +106,8 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
                    */
                   this.searchHandler();
                 } }
-                disabled={ !(this.state.location || this.state.description) }
+                disabled={ !(this.state.location || this.state.description)
+                           || (this.joinFilter() === this.props.filter) }
         >
           Get data
         </Button>
@@ -126,6 +132,7 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
 
 const mapStateToProps    = (state: IRootState) => ({
   favorites: state.favorites as string[],
+  filter:    state.posts.filter
 });
 const mapDispatchToProps = {
   getPostsByQuery,

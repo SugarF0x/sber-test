@@ -11,10 +11,12 @@ export function getPostsByQuery(status: TStatus, data?: IPost[]): IAction {
     case "fetching":
       return {
         type: 'FETCH_POSTS_START',
+        data
       };
     case "error":
       return {
         type: 'FETCH_POSTS_ERROR',
+        data
       };
     case "success":
       return {
@@ -24,6 +26,7 @@ export function getPostsByQuery(status: TStatus, data?: IPost[]): IAction {
     case "not_found":
       return {
         type: 'FETCH_POSTS_404',
+        data
       };
   }
 }
