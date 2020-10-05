@@ -80,9 +80,9 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
 }
 
 const mapStateToProps    = (state: IRootState) => ({
-  posts:     state.posts.array as IPost[],
-  status:    state.posts.status as TStatus,
-  favorites: state.favorites as string[],
+  posts:     state.posts.array,
+  status:    state.posts.status,
+  favorites: state.favorites.ids,
 });
 const mapDispatchToProps = {
   getDummyPosts,

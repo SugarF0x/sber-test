@@ -131,7 +131,7 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
 }
 
 const mapStateToProps    = (state: IRootState) => ({
-  favorites: state.favorites as string[],
+  favorites: state.favorites.ids as string[],
   filter:    state.posts.filter
 });
 const mapDispatchToProps = {

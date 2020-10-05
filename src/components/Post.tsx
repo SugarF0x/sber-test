@@ -58,7 +58,7 @@ class Post extends React.Component<IPostProps, IPostState> {
   // bound functions
 
   favoriteAction = () => {
-    this.props.setFavorite(this.props.post.id)
+    this.props.setFavorite({ id: this.props.post.id })
   }
 
   render() {

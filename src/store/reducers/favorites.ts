@@ -1,8 +1,16 @@
-import { IAction } from "../types";
+import {IAction, IPost, IRootFavorites} from "../types";
 
-let defaultFavorites = [] as string[];
+let defaultFavorites = {
+  status: 'success',
+  array: [],
+  ids: []
+} as IRootFavorites;
 let storage          = localStorage.getItem('favs');
-if (storage) defaultFavorites = JSON.parse(storage);
+if (storage) {
+  let parsed = JSON.parse(storage);
+  defaultFavorites.array = parsed.array;
+  defaultFavorites.ids   = parsed.ids;
+}
 
 function removeIndex(arr: string[], i: number): string[] {
   delete arr[i];
@@ -12,28 +20,32 @@ function removeIndex(arr: string[], i: number): string[] {
   return arr;
 }
 
-function storeLocally(array: string[]) {
-  if (array[0])
-    localStorage.setItem('favs', JSON.stringify(array));
-  else
-    localStorage.removeItem('favs');
+function storeLocally(obj: IRootFavorites) {
+  localStorage.setItem('favs', JSON.stringify(obj));
 }
 
 export default (state = defaultFavorites, action: IAction) => {
+  function mutateState(toMutate: { status?: string, array?: IPost[], ids?: string[] }): IRootFavorites {
+    return Object.assign({}, state, toMutate)
+  }
+
   switch (action.type) {
     case 'FAVORITE':
-      if (state.indexOf(action.data) !== -1) {
-        let result = removeIndex(state, state.indexOf(action.data));
-        storeLocally(result);
-        return result;
+      if (state.ids.indexOf(action.data.id) !== -1) {
+        let result = removeIndex(state.ids, state.ids.indexOf(action.data.id));
+        storeLocally(mutateState({ ids: result }));
+        return mutateState({ ids: result });
       } else {
         let result = [
-          ...state,
-          action.data,
+          ...state.ids,
+          action.data.id,
         ];
-        storeLocally(result);
-        return result;
+        storeLocally(mutateState({ ids: result }));
+        return mutateState({ ids: result });
       }
+    case 'FETCH_FAVORITES_START':
+    case 'FETCH_FAVORITES_ERROR':
+    case 'FETCH_FAVORITES_SUCCESS':
     default:
       return state;
   }
