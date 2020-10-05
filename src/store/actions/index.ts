@@ -31,27 +31,15 @@ export function getPostsByQuery(status: TStatus, data?: IPost[]): IAction {
   }
 }
 
-export function getFavorites(status: TStatus, posts?: IPost[] ) {
-  switch (status) {
-    case 'fetching':
-      return {
-        type: 'FETCH_FAVORITES_START'
-      }
-    case 'error':
-      return {
-        type: 'FETCH_FAVORITES_ERROR'
-      }
-    case 'success':
-      return {
-        type: 'FETCH_FAVORITES_SUCCESS',
-        posts
-      }
-  }
+export function setFavorite(post: IPost): IAction {
+  return {
+    type: 'TO_FAVORITE',
+    data: post,
+  };
 }
 
-export function setFavorite(id: string): IAction {
+export function toggleDisplay() {
   return {
-    type: 'FAVORITE',
-    data: id,
-  };
+    type: 'TOGGLE_DISPLAY'
+  }
 }

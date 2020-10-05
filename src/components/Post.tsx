@@ -55,10 +55,8 @@ class Post extends React.Component<IPostProps, IPostState> {
     return `${day}.${month}.${year} at ${hour}:${mins}`
   }
 
-  // bound functions
-
   favoriteAction = () => {
-    this.props.setFavorite({ id: this.props.post.id })
+    this.props.setFavorite( this.props.post )
   }
 
   render() {

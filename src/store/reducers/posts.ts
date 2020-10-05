@@ -1,11 +1,20 @@
 import { IAction, IPost, IRootPosts } from "../types";
 
-const defaultPosts = {
+let defaultPosts = {
   status: 'success',
-  array:  [] as IPost[],
-  filter: ''
+  search:  [],
+  favs: [],
+  filter: '',
+  display: 'default'
 } as IRootPosts;
 
+let ls = localStorage.getItem('favs');
+if (ls) defaultPosts.favs = JSON.parse(ls);
+
+/**
+ * Hard-wired dummy data sample used as reference
+ * Can be called when corsanywhere rejects call
+ */
 const dummyData = [
   {
     id:           "569bfcdc-fad1-4563-ae57-8585831db596",
@@ -23,21 +32,73 @@ const dummyData = [
 ] as IPost[];
 
 export default (state = defaultPosts, action: IAction) => {
-  function mutateState(toMutate: { status?: string, array?: IPost[], filter?:string }): IRootPosts {
+  /**
+   * Return state with changes passed as arguments
+   */
+  function mutateState(toMutate: {}): IRootPosts {
     return Object.assign({}, state, toMutate)
   }
 
+  /**
+   * Sync data with localStorage
+   */
+  function storeLocally(posts: IPost[]) {
+    localStorage.setItem('favs', JSON.stringify(posts));
+  }
+
   switch (action.type) {
+    /**
+     * Get hard-wired dummy post without having to call API
+     */
     case 'GET_DUMMY_POSTS':
-      return mutateState({ status: 'success', array: dummyData, filter: '' });
+      return mutateState({ status: 'success', search: dummyData, filter: '', display: 'search' });
+
+    /**
+     * Toggle display to avoid unnecessary data refetch
+     */
+    case 'TOGGLE_DISPLAY':
+      return mutateState({ display: state.display === 'favs' ? 'search' : 'favs' })
+
+    /**
+     * Mutations regarding posts fetched from search filter
+     */
     case 'FETCH_POSTS_START':
-      return mutateState({ status: 'fetching', filter: action.data.filter });
+      return mutateState({ status: 'fetching', filter: action.data, display: 'search' });
     case 'FETCH_POSTS_ERROR':
-      return mutateState({ status: 'error' });
+      return mutateState({ status: 'error', filter: '' });
     case 'FETCH_POSTS_SUCCESS':
-      return mutateState({ status: 'success', array: action.data.posts, filter: action.data.filter });
+      return mutateState({ status: 'success', search: action.data });
     case 'FETCH_POSTS_404':
-      return mutateState({ status: 'not_found', filter: action.data.filter })
+      return mutateState({ status: 'not_found' })
+
+    /**
+     * Mutations regarding fetching favorites as well as adding and removing them
+     */
+    case 'TO_FAVORITE':
+      let ids = state.favs.map((entry: IPost): string => {
+        return entry.id;
+      })
+      if (ids.indexOf(action.data.id) !== -1) {
+        let result = state.favs.filter((entry: IPost) => {
+          return entry.id !== action.data.id
+        })
+        storeLocally(mutateState({ favs: result }).favs);
+        return mutateState({ favs: result });
+      } else {
+        let result = [
+          ...state.favs,
+          action.data,
+        ];
+        storeLocally(mutateState({ favs: result }).favs);
+        return mutateState({ favs: result });
+      }
+    case 'FETCH_FAVORITES_START':
+      return mutateState({ status: 'fetching', display: 'favs' });
+    case 'FETCH_FAVORITES_ERROR':
+      return mutateState({ status: 'error' });
+    case 'FETCH_FAVORITES_SUCCESS':
+      return mutateState({ status: 'success', favs: action.data });
+
     default:
       return state;
   }

@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { connect }         from "react-redux";
-import { getPostsByQuery } from "../store/actions";
+import { getPostsByQuery, toggleDisplay } from "../store/actions";
 
-import { Input, Button }              from '@material-ui/core';
-import { IPost, IRootState } from "../store/types";
+import { Input, Button }          from '@material-ui/core';
+import { IRootPosts, IRootState } from "../store/types";
 
 interface ISearchProps {
-  favorites: string[];
+  posts: IRootPosts;
   getPostsByQuery: Function;
-  filter: string;
+  toggleDisplay: Function;
 }
 
 interface ISearchState {
@@ -37,39 +37,29 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
     return `${this.state.description}-${this.state.location}`
   }
 
-  searchHandler = (fav?: string) => {
-    this.props.getPostsByQuery('fetching', { filter: this.joinFilter() });
-
-    if (fav === 'fav') {
-      let favorites = [] as IPost[];
-      this.props.favorites.forEach( entry => {
-        fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions/${entry}.json`,
-          { headers: { origin: 'http://localhost:3000' } })
-          .then(res => res.json())
-          .then(res => {
-            favorites.push(res);
-            if (favorites.length === this.props.favorites.length) {
-              this.props.getPostsByQuery('success', { posts: favorites, filter: '$favorites-plug-filter$' } );
-            }
-          })
-          .catch(() => {
-            this.props.getPostsByQuery('error');
-          });
-      });
+  searchHandler = () => {
+    if (this.joinFilter() === this.props.posts.filter) {
+      this.props.toggleDisplay();
     } else {
+      this.props.getPostsByQuery('fetching', this.joinFilter());
+
       fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json?description=${ this.state.description }&location=${ this.state.location }`,
         { headers: { origin: 'http://localhost:3000' } })
         .then(res => res.json())
         .then(res => {
           if (res.length > 0)
-            this.props.getPostsByQuery('success', { posts: res, filter: this.joinFilter() });
+            this.props.getPostsByQuery('success', res);
           else
-            this.props.getPostsByQuery('not_found', { filter: this.joinFilter() });
+            this.props.getPostsByQuery('not_found');
         })
         .catch(() => {
           this.props.getPostsByQuery('error');
         });
     }
+  }
+
+  displayFavorites = () => {
+    this.props.toggleDisplay();
   }
 
   enterHandler = (e: any) => {
@@ -107,7 +97,8 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
                   this.searchHandler();
                 } }
                 disabled={ !(this.state.location || this.state.description)
-                           || (this.joinFilter() === this.props.filter) }
+                           || ((this.joinFilter() === this.props.posts.filter)
+                                && (this.props.posts.display !== 'favs')) }
         >
           Get data
         </Button>
@@ -119,9 +110,9 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
                    * these functions can't be fixed as typsecript considers them unasignable
                    * this will not be an issue with regular js
                    */
-                  this.searchHandler('fav');
+                  this.displayFavorites();
                 } }
-                disabled={ this.props.favorites.length === 0 }
+                disabled={ this.props.posts.favs.length === 0 || this.props.posts.display === 'favs' }
         >
           Get favorites
         </Button>
@@ -131,11 +122,11 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
 }
 
 const mapStateToProps    = (state: IRootState) => ({
-  favorites: state.favorites.ids as string[],
-  filter:    state.posts.filter
+  posts: state.posts
 });
 const mapDispatchToProps = {
   getPostsByQuery,
+  toggleDisplay
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

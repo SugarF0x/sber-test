@@ -12,6 +12,7 @@ export interface IPost {
   company_logo: any;
 }
 
+export type TDisplay = 'search' | 'favs' | 'default';
 export type TStatus = 'fetching' | 'success' | 'error' | 'not_found';
 
 export interface IAction {
@@ -19,19 +20,14 @@ export interface IAction {
   data?: any;
 }
 
-export interface IRootFavorites {
-  status: TStatus;
-  array: IPost[];
-  ids: string[];
-}
-
 export interface IRootPosts {
   status: TStatus;
-  array: IPost[];
+  search: IPost[];
+  favs: IPost[];
   filter: string;
+  display: TDisplay;
 }
 
 export interface IRootState {
   posts: IRootPosts;
-  favorites: IRootFavorites;
 }
