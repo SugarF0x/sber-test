@@ -1,10 +1,10 @@
 import { IAction, IPost, IRootPosts } from "../types";
 
 let defaultPosts = {
-  status: 'success',
+  status:  'success',
   search:  [],
-  favs: [],
-  filter: '',
+  favs:    [],
+  filter:  '',
   display: 'default'
 } as IRootPosts;
 
@@ -51,25 +51,25 @@ export default (state = defaultPosts, action: IAction) => {
      * Get hard-wired dummy post without having to call API
      */
     case 'GET_DUMMY_POSTS':
-      return mutateState({ status: 'success', search: dummyData, filter: '', display: 'search' });
+      return mutateState({status: 'success', search: dummyData, filter: '', display: 'search'});
 
     /**
      * Toggle display to avoid unnecessary data refetch
      */
     case 'TOGGLE_DISPLAY':
-      return mutateState({ display: state.display === 'favs' ? 'search' : 'favs' })
+      return mutateState({display: state.display === 'favs' ? 'search' : 'favs'})
 
     /**
      * Mutations regarding posts fetched from search filter
      */
     case 'FETCH_POSTS_START':
-      return mutateState({ status: 'fetching', filter: action.data, display: 'search' });
+      return mutateState({status: 'fetching', filter: action.data, display: 'search'});
     case 'FETCH_POSTS_ERROR':
-      return mutateState({ status: 'error', filter: '' });
+      return mutateState({status: 'error', filter: ''});
     case 'FETCH_POSTS_SUCCESS':
-      return mutateState({ status: 'success', search: action.data });
+      return mutateState({status: 'success', search: action.data});
     case 'FETCH_POSTS_404':
-      return mutateState({ status: 'not_found' })
+      return mutateState({status: 'not_found'})
 
     /**
      * Mutations regarding fetching favorites as well as adding and removing them
@@ -82,22 +82,22 @@ export default (state = defaultPosts, action: IAction) => {
         let result = state.favs.filter((entry: IPost) => {
           return entry.id !== action.data.id
         })
-        storeLocally(mutateState({ favs: result }).favs);
-        return mutateState({ favs: result });
+        storeLocally(mutateState({favs: result}).favs);
+        return mutateState({favs: result});
       } else {
         let result = [
           ...state.favs,
           action.data,
         ];
-        storeLocally(mutateState({ favs: result }).favs);
-        return mutateState({ favs: result });
+        storeLocally(mutateState({favs: result}).favs);
+        return mutateState({favs: result});
       }
     case 'FETCH_FAVORITES_START':
-      return mutateState({ status: 'fetching', display: 'favs' });
+      return mutateState({status: 'fetching', display: 'favs'});
     case 'FETCH_FAVORITES_ERROR':
-      return mutateState({ status: 'error' });
+      return mutateState({status: 'error'});
     case 'FETCH_FAVORITES_SUCCESS':
-      return mutateState({ status: 'success', favs: action.data });
+      return mutateState({status: 'success', favs: action.data});
 
     default:
       return state;

@@ -25,7 +25,7 @@ interface IPostState {
 }
 
 class Post extends React.Component<IPostProps, IPostState> {
-  card     = {
+  card           = {
     margin: '1rem',
   };
   favoriteButton = {
@@ -40,23 +40,25 @@ class Post extends React.Component<IPostProps, IPostState> {
     let end   = str.indexOf('</p>');
     if (str.slice(start + 3, end).indexOf('<') !== -1) {
       return this.trimContent(str.slice(end + 3));
-    } else return str.slice(start + 3, end);
+    } else {
+      return str.slice(start + 3, end);
+    }
   }
 
   formatDate(str: string): string {
-    let date  = new Date(str);
+    let date = new Date(str);
 
-    let day   = date.getDay().toString().length === 1 ? `0${date.getDay()}` : date.getDay();
-    let month = date.getMonth().toString().length === 1 ? `0${date.getMonth()}` : date.getMonth();
+    let day   = date.getDay().toString().length === 1 ? `0${ date.getDay() }` : date.getDay();
+    let month = date.getMonth().toString().length === 1 ? `0${ date.getMonth() }` : date.getMonth();
     let year  = date.getFullYear();
-    let hour  = date.getHours().toString().length === 1 ? `0${date.getHours()}` : date.getHours();
-    let mins  = date.getMinutes().toString().length === 1 ? `0${date.getMinutes()}` : date.getMinutes();
+    let hour  = date.getHours().toString().length === 1 ? `0${ date.getHours() }` : date.getHours();
+    let mins  = date.getMinutes().toString().length === 1 ? `0${ date.getMinutes() }` : date.getMinutes();
 
-    return `${day}.${month}.${year} at ${hour}:${mins}`
+    return `${ day }.${ month }.${ year } at ${ hour }:${ mins }`
   }
 
   favoriteAction = () => {
-    this.props.setFavorite( this.props.post )
+    this.props.setFavorite(this.props.post)
   }
 
   render() {

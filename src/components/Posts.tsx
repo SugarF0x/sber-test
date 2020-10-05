@@ -25,7 +25,7 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
       return (
         <div>
           <h3>There are currently no posts here</h3>
-          <Button style={ { margin: '1rem' } }
+          <Button style={ {margin: '1rem'} }
                   variant="contained"
                   color="primary"
                   onClick={ () => {
@@ -44,7 +44,9 @@ class Wrapper extends React.Component<IWrapProps, IWrapState> {
       switch (this.props.posts.status) {
         case 'success':
           return this.props.posts[this.props.posts.display].map((entry: IPost) => (
-            <Post key={ entry.id } post={ entry } favorite={ this.props.posts.favs.filter((e: IPost) => entry.id === e.id).length > 0 }/>
+            <Post key={ entry.id }
+                  post={ entry }
+                  favorite={ this.props.posts.favs.filter((e: IPost) => entry.id === e.id).length > 0 }/>
           ))
         case 'fetching':
           return (

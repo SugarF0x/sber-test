@@ -45,16 +45,18 @@ export function toggleDisplay() {
 }
 
 export const fetchPosts = (desc: string, location: string) => {
-  return function(dispatch: any) {
+  return function (dispatch: any) {
     dispatch(getPostsByQuery('fetching'))
     fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json?description=${ desc }&location=${ location }`,
-      { headers: { origin: 'http://localhost:3000' } })
+          {headers: {origin: 'http://localhost:3000'}}
+    )
       .then(res => res.json())
       .then(res => {
-        if (res.length > 0)
+        if (res.length > 0) {
           dispatch(getPostsByQuery('success', res))
-        else
+        } else {
           dispatch(getPostsByQuery('not_found'))
+        }
       })
       .catch(() => {
         dispatch(getPostsByQuery('error'))

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {connect } from "react-redux";
+import { connect }                   from "react-redux";
 import { toggleDisplay, fetchPosts } from "../store/actions";
 
 import { Input, Button }          from '@material-ui/core';
@@ -34,7 +34,7 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
   };
 
   joinFilter = (): string => {
-    return `${this.state.description}-${this.state.location}`
+    return `${ this.state.description }-${ this.state.location }`
   }
 
   searchHandler = () => {
@@ -50,8 +50,9 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
   }
 
   enterHandler = (e: any) => {
-    if (e.key === 'Enter' && (this.state.location || this.state.description))
+    if (e.key === 'Enter' && (this.state.location || this.state.description)) {
       this.searchHandler();
+    }
   }
 
   render() {
@@ -61,19 +62,19 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
           <Input placeholder="Description"
                  value={ this.state.description }
                  onChange={ (e) => {
-                   this.setState({ description: e.target.value });
+                   this.setState({description: e.target.value});
                  } }
                  onKeyDown={ e => this.enterHandler(e) }
           />
           <Input placeholder="Location"
                  value={ this.state.location }
                  onChange={ (e) => {
-                   this.setState({ location: e.target.value });
+                   this.setState({location: e.target.value});
                  } }
                  onKeyDown={ e => this.enterHandler(e) }
           />
         </div>
-        <Button style={ { margin: '1rem' } }
+        <Button style={ {margin: '1rem'} }
                 variant="contained"
                 color="primary"
                 onClick={ () => {
@@ -90,7 +91,7 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
         >
           Get data
         </Button>
-        <Button style={ { margin: '1rem' } }
+        <Button style={ {margin: '1rem'} }
                 variant="contained"
                 color="primary"
                 onClick={ () => {
@@ -117,7 +118,7 @@ const mapStateToProps    = (state: IRootState) => ({
 const mapDispatchToProps = (dispatch: Function) => {
   return {
     toggleDisplay: () => dispatch(toggleDisplay()),
-    fetchPosts: (desc: string, loc: string) => dispatch(fetchPosts(desc, loc))
+    fetchPosts:    (desc: string, loc: string) => dispatch(fetchPosts(desc, loc))
   }
 };
 
