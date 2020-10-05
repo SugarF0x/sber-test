@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { connect }         from "react-redux";
-import { getPostsByQuery, toggleDisplay } from "../store/actions";
+import {connect } from "react-redux";
+import { toggleDisplay, fetchPosts } from "../store/actions";
 
 import { Input, Button }          from '@material-ui/core';
 import { IRootPosts, IRootState } from "../store/types";
 
 interface ISearchProps {
   posts: IRootPosts;
-  getPostsByQuery: Function;
   toggleDisplay: Function;
+  fetchPosts: Function;
 }
 
 interface ISearchState {
@@ -41,20 +41,7 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
     if (this.joinFilter() === this.props.posts.filter) {
       this.props.toggleDisplay();
     } else {
-      this.props.getPostsByQuery('fetching', this.joinFilter());
-
-      fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json?description=${ this.state.description }&location=${ this.state.location }`,
-        { headers: { origin: 'http://localhost:3000' } })
-        .then(res => res.json())
-        .then(res => {
-          if (res.length > 0)
-            this.props.getPostsByQuery('success', res);
-          else
-            this.props.getPostsByQuery('not_found');
-        })
-        .catch(() => {
-          this.props.getPostsByQuery('error');
-        });
+      this.props.fetchPosts(this.state.description, this.state.location);
     }
   }
 
@@ -97,6 +84,7 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
                   this.searchHandler();
                 } }
                 disabled={ !(this.state.location || this.state.description)
+                           || this.props.posts.status === 'fetching'
                            || ((this.joinFilter() === this.props.posts.filter)
                                 && (this.props.posts.display !== 'favs')) }
         >
@@ -112,7 +100,9 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
                    */
                   this.displayFavorites();
                 } }
-                disabled={ this.props.posts.favs.length === 0 || this.props.posts.display === 'favs' }
+                disabled={ this.props.posts.favs.length === 0
+                           || this.props.posts.display === 'favs'
+                           || this.props.posts.status === 'fetching' }
         >
           Get favorites
         </Button>
@@ -124,9 +114,11 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
 const mapStateToProps    = (state: IRootState) => ({
   posts: state.posts
 });
-const mapDispatchToProps = {
-  getPostsByQuery,
-  toggleDisplay
+const mapDispatchToProps = (dispatch: Function) => {
+  return {
+    toggleDisplay: () => dispatch(toggleDisplay()),
+    fetchPosts: (desc: string, loc: string) => dispatch(fetchPosts(desc, loc))
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
