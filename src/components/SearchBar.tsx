@@ -49,7 +49,7 @@ class SearchBar extends React.Component<ISearchProps, ISearchState> {
           .then(res => {
             favorites.push(res);
             if (favorites.length === this.props.favorites.length) {
-              this.props.getPostsByQuery('success', favorites);
+              this.props.getPostsByQuery('success', { posts: favorites, filter: '$favorites-plug-filter$' } );
             }
           })
           .catch(() => {
