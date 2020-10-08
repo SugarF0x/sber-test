@@ -6,11 +6,6 @@ import { SearchBar }     from "./SearchBar";
 Enzyme.configure({ adapter: new Adapter() });
 
 describe("Search Component Testing", () => {
-
-  /**
-   * Element render tests
-   */
-
   const store = {
     status:  "success",
     search:  [],
@@ -25,16 +20,18 @@ describe("Search Component Testing", () => {
     wrapper = mount(<SearchBar posts={ store }/>);
   });
 
+  /**
+   * Element render tests
+   */
+
   test("Render component", () => {
     expect(wrapper.length)
       .toBe(1);
   });
-
   test("Render 2 text fields", () => {
     expect(wrapper.find("button"))
       .toHaveLength(2);
   });
-
   test("Render 2 buttons", () => {
     expect(wrapper.find("button"))
       .toHaveLength(2);
@@ -103,7 +100,6 @@ describe("Search Component Testing", () => {
                   .prop("disabled"))
       .toBe(true);
   });
-
   test("Favorites' button disabled state change on favs content change", () => {
     let dummyFavorite = {
       id:           "569bfcdc-fad1-4563-ae57-8585831db596",
