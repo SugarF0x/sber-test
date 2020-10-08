@@ -17,7 +17,7 @@ interface ISearchState {
   location: string,
 }
 
-class SearchBar extends React.Component<ISearchProps, ISearchState> {
+export class SearchBar extends React.Component<ISearchProps, ISearchState> {
   constructor(props: ISearchProps) {
     super(props);
     this.state = {
