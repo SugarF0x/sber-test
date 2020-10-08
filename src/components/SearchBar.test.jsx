@@ -100,6 +100,42 @@ describe("Search Component Testing", () => {
                   .prop("disabled"))
       .toBe(true);
   });
+  test("Search button availability based on filter", () => {
+    /**
+     * Initial test
+     */
+    expect(wrapper.find("button")
+                  .at(0)
+                  .prop("disabled"))
+      .toBe(true);
+
+    /**
+     * Set matching inputs and filter
+     * (mismatching is already tested before)
+     */
+    wrapper.setProps({ posts: Object.assign({}, store, { filter: "js-moscow" }) });
+    wrapper.find("input")
+           .at(0)
+           .simulate("change", { target: { value: "js" } });
+    wrapper.find("input")
+           .at(1)
+           .simulate("change", { target: { value: "moscow" } });
+    expect(wrapper.find("button")
+                  .at(0)
+                  .prop("disabled"))
+      .toBe(true);
+
+    /**
+     * Change inputs
+     */
+    wrapper.find("input")
+           .at(0)
+           .simulate("change", { target: { value: "python" } });
+    expect(wrapper.find("button")
+                  .at(0)
+                  .prop("disabled"))
+      .toBe(false);
+  });
   test("Favorites' button disabled state change on favs content change", () => {
     let dummyFavorite = {
       id:           "569bfcdc-fad1-4563-ae57-8585831db596",
