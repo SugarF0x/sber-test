@@ -5,8 +5,6 @@ import { SearchBar }     from "./SearchBar";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-// TODO: add a mutateProps function
-
 describe("Search Component Testing", () => {
   const store     = {
     status:  "success",
@@ -29,6 +27,13 @@ describe("Search Component Testing", () => {
     company_logo: "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbE9KIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--a30d608a910769a14438f7e0d7f3a673ca961499/HTC%20logo.jpg",
   };
   let wrapper;
+
+  /**
+   * override wrapper props with toMutate keeping the rest intact
+   */
+  function mutateProps(toMutate) {
+    wrapper.setProps({ posts: Object.assign({}, wrapper.props().posts, toMutate) });
+  }
 
   beforeEach(() => {
     // noinspection RequiredAttributes
@@ -106,6 +111,7 @@ describe("Search Component Testing", () => {
      * (mismatching is already tested before)
      */
     wrapper.setProps({ posts: Object.assign({}, store, { filter: "js-moscow" }) });
+    mutateProps({ filter: "js-moscow" });
     wrapper.find("input").at(0).simulate("change", { target: { value: "js" } });
     wrapper.find("input").at(1).simulate("change", { target: { value: "moscow" } });
     expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
@@ -125,19 +131,19 @@ describe("Search Component Testing", () => {
     /**
      * Add 2 favorites
      */
-    wrapper.setProps({ posts: Object.assign({}, store, { favs: [dummyPost, dummyPost] }) });
+    mutateProps({ favs: [dummyPost, dummyPost] });
     expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
 
     /**
      * Remove 1 favorite
      */
-    wrapper.setProps({ posts: Object.assign({}, store, { favs: [dummyPost] }) });
+    mutateProps({ favs: [dummyPost] });
     expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
 
     /**
      * Remove all favorites
      */
-    wrapper.setProps({ posts: Object.assign({}, store) });
+    mutateProps({ favs: [] });
     expect(wrapper.find("button").at(1).prop("disabled")).toBe(true);
   });
   test("Buttons' state changed based on display", () => {
@@ -159,14 +165,14 @@ describe("Search Component Testing", () => {
     /**
      * Change display to 'favs'
      */
-    wrapper.setProps({ posts: Object.assign({}, wrapper.props().posts, { display: "favs" }) });
+    mutateProps({ display: "favs" });
     expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
     expect(wrapper.find("button").at(1).prop("disabled")).toBe(true);
 
     /**
      * Change display to 'search'
      */
-    wrapper.setProps({ posts: Object.assign({}, wrapper.props().posts, { display: "search", filter: "js-" }) });
+    mutateProps({ display: "search", filter: "js-" });
     expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
     expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
   });
