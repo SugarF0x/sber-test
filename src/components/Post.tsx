@@ -48,8 +48,8 @@ class Post extends React.Component<IPostProps, IPostState> {
   formatDate(str: string): string {
     let date = new Date(str);
 
-    let day   = date.getDay().toString().length === 1 ? `0${ date.getDay() }` : date.getDay();
-    let month = date.getMonth().toString().length === 1 ? `0${ date.getMonth() }` : date.getMonth();
+    let day   = date.getDate().toString().length === 1 ? `0${ date.getDate() }` : date.getDate();
+    let month = date.getMonth().toString().length === 1 ? `0${ date.getMonth()+1 }` : date.getMonth()+1;
     let year  = date.getFullYear();
     let hour  = date.getHours().toString().length === 1 ? `0${ date.getHours() }` : date.getHours();
     let mins  = date.getMinutes().toString().length === 1 ? `0${ date.getMinutes() }` : date.getMinutes();
