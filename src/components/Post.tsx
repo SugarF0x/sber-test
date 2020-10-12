@@ -24,7 +24,7 @@ interface IPostState {
   fav: boolean;
 }
 
-class Post extends React.Component<IPostProps, IPostState> {
+export class Post extends React.Component<IPostProps, IPostState> {
   card           = {
     margin: '1rem',
   };
