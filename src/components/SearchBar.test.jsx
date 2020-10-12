@@ -45,7 +45,7 @@ describe("Search Component Testing", () => {
       expect(wrapper.length).toBe(1);
     });
     test("Render 2 text fields", () => {
-      expect(wrapper.find("button")).toHaveLength(2);
+      expect(wrapper.find("input")).toHaveLength(2);
     });
     test("Render 2 buttons", () => {
       expect(wrapper.find("button")).toHaveLength(2);
