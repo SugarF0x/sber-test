@@ -4,7 +4,6 @@ import Adapter           from "enzyme-adapter-react-16";
 
 import { Post }     from "./Post";
 import {
-  CardActions,
   CardContent,
   CardHeader,
   IconButton,
@@ -29,9 +28,12 @@ describe("Post Component Testing", () => {
   };
   let wrapper;
 
+  function favoritePropAction() {
+    wrapper.setProps({ post: post, favorite: !wrapper.props().favorite, setFavorite: favoritePropAction });
+  }
+
   beforeEach(() => {
-    // noinspection RequiredAttributes
-    wrapper = mount(<Post post={ post }/>);
+    wrapper = mount(<Post post={ post } favorite={ false } setFavorite={ favoritePropAction }/>);
   });
 
   describe("Method tests", () => {
@@ -65,6 +67,23 @@ describe("Post Component Testing", () => {
   });
 
   describe("Element interaction tests", () => {
-    // favorite button click
+    test("Favorite button click", () => {
+      /**
+       * Initial test
+       */
+      expect(wrapper.find(FavoriteIcon).prop("color")).toBe("action");
+
+      /**
+       * Add to favorites
+       */
+      wrapper.find(IconButton).simulate("click");
+      expect(wrapper.find(FavoriteIcon).prop("color")).toBe("secondary");
+
+      /**
+       * Remove from favorites
+       */
+      wrapper.find(IconButton).simulate("click");
+      expect(wrapper.find(FavoriteIcon).prop("color")).toBe("action");
+    });
   });
 });
