@@ -19,7 +19,7 @@ interface IWrapState {
 
 }
 
-class Wrapper extends React.Component<IWrapProps, IWrapState> {
+export class Wrapper extends React.Component<IWrapProps, IWrapState> {
   pickPosts = () => {
     if (this.props.posts.display === 'default') {
       return (
