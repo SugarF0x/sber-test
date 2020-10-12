@@ -35,7 +35,7 @@ class Post extends React.Component<IPostProps, IPostState> {
 
   // util functions
 
-  trimContent(str: string): string {
+  trimContent = (str: string): string => {
     let start = str.indexOf('<p>');
     let end   = str.indexOf('</p>');
     if (str.slice(start + 3, end).indexOf('<') !== -1) {
