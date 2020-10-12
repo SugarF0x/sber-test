@@ -40,140 +40,136 @@ describe("Search Component Testing", () => {
     wrapper = mount(<SearchBar posts={ store }/>);
   });
 
-  /**
-   * Element render tests
-   */
-
-  test("Render component", () => {
-    expect(wrapper.length).toBe(1);
-  });
-  test("Render 2 text fields", () => {
-    expect(wrapper.find("button")).toHaveLength(2);
-  });
-  test("Render 2 buttons", () => {
-    expect(wrapper.find("button")).toHaveLength(2);
-  });
-
-  /**
-   * Element interaction tests
-   */
-
-  test("Search button disabled state change on input", () => {
-    let description = wrapper.find("input").at(0);
-    let location    = wrapper.find("input").at(1);
-    /*
-     i wanted to do a button variable
-     but for some reason it's state would not update on change
-     while the full path call works every time
-     ?question mark?
-     */
-    /**
-     * Initial state test
-     */
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
-
-    /**
-     * Stage change on Description input
-     */
-    description.simulate("change", { target: { value: "js" } });
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
-    description.simulate("change", { target: { value: "" } });
-
-    /**
-     * State change on Location input
-     */
-    location.simulate("change", { target: { value: "moscow" } });
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
-    location.simulate("change", { target: { value: "" } });
-
-    /**
-     * State change on both Description and Location input
-     */
-    description.simulate("change", { target: { value: "js" } });
-    location.simulate("change", { target: { value: "moscow" } });
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
-    description.simulate("change", { target: { value: "" } });
-    location.simulate("change", { target: { value: "" } });
-
-    /**
-     * State reversion to initial on input clear
-     */
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
-  });
-  test("Search button availability based on filter", () => {
-    /**
-     * Initial test
-     */
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
-
-    /**
-     * Set matching inputs and filter
-     * (mismatching is already tested before)
-     */
-    wrapper.setProps({ posts: Object.assign({}, store, { filter: "js-moscow" }) });
-    mutateProps({ filter: "js-moscow" });
-    wrapper.find("input").at(0).simulate("change", { target: { value: "js" } });
-    wrapper.find("input").at(1).simulate("change", { target: { value: "moscow" } });
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
-
-    /**
-     * Change inputs
-     */
-    wrapper.find("input").at(0).simulate("change", { target: { value: "python" } });
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
-  });
-  test("Favorites' button disabled state change on favs content change", () => {
-    /**
-     * Initial state test
-     */
-    expect(wrapper.find("button").at(1).prop("disabled")).toBe(true);
-
-    /**
-     * Add 2 favorites
-     */
-    mutateProps({ favs: [dummyPost, dummyPost] });
-    expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
-
-    /**
-     * Remove 1 favorite
-     */
-    mutateProps({ favs: [dummyPost] });
-    expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
-
-    /**
-     * Remove all favorites
-     */
-    mutateProps({ favs: [] });
-    expect(wrapper.find("button").at(1).prop("disabled")).toBe(true);
-  });
-  test("Buttons' state changed based on display", () => {
-    wrapper.setProps({
-      posts: Object.assign({}, store, {
-        filter: "",
-        search: [dummyPost],
-        favs:   [dummyPost],
-      }),
+  describe("Element render tests", () => {
+    test("Render component", () => {
+      expect(wrapper.length).toBe(1);
     });
-    wrapper.find("input").at(0).simulate("change", { target: { value: "js" } });
+    test("Render 2 text fields", () => {
+      expect(wrapper.find("button")).toHaveLength(2);
+    });
+    test("Render 2 buttons", () => {
+      expect(wrapper.find("button")).toHaveLength(2);
+    });
+  });
 
-    /**
-     * Initial test with both input and favorites present
-     */
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
-    expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
+  describe("Element interaction tests", () => {
+    test("Search button disabled state change on input", () => {
+      let description = wrapper.find("input").at(0);
+      let location    = wrapper.find("input").at(1);
+      /*
+       i wanted to do a button variable
+       but for some reason it's state would not update on change
+       while the full path call works every time
+       ?question mark?
+       */
+      /**
+       * Initial state test
+       */
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
 
-    /**
-     * Change display to 'favs'
-     */
-    mutateProps({ display: "favs" });
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
-    expect(wrapper.find("button").at(1).prop("disabled")).toBe(true);
+      /**
+       * Stage change on Description input
+       */
+      description.simulate("change", { target: { value: "js" } });
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
+      description.simulate("change", { target: { value: "" } });
 
-    /**
-     * Change display to 'search'
-     */
-    mutateProps({ display: "search", filter: "js-" });
-    expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
-    expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
+      /**
+       * State change on Location input
+       */
+      location.simulate("change", { target: { value: "moscow" } });
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
+      location.simulate("change", { target: { value: "" } });
+
+      /**
+       * State change on both Description and Location input
+       */
+      description.simulate("change", { target: { value: "js" } });
+      location.simulate("change", { target: { value: "moscow" } });
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
+      description.simulate("change", { target: { value: "" } });
+      location.simulate("change", { target: { value: "" } });
+
+      /**
+       * State reversion to initial on input clear
+       */
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
+    });
+    test("Search button availability based on filter", () => {
+      /**
+       * Initial test
+       */
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
+
+      /**
+       * Set matching inputs and filter
+       * (mismatching is already tested before)
+       */
+      wrapper.setProps({ posts: Object.assign({}, store, { filter: "js-moscow" }) });
+      mutateProps({ filter: "js-moscow" });
+      wrapper.find("input").at(0).simulate("change", { target: { value: "js" } });
+      wrapper.find("input").at(1).simulate("change", { target: { value: "moscow" } });
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
+
+      /**
+       * Change inputs
+       */
+      wrapper.find("input").at(0).simulate("change", { target: { value: "python" } });
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
+    });
+    test("Favorites' button disabled state change on favs content change", () => {
+      /**
+       * Initial state test
+       */
+      expect(wrapper.find("button").at(1).prop("disabled")).toBe(true);
+
+      /**
+       * Add 2 favorites
+       */
+      mutateProps({ favs: [dummyPost, dummyPost] });
+      expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
+
+      /**
+       * Remove 1 favorite
+       */
+      mutateProps({ favs: [dummyPost] });
+      expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
+
+      /**
+       * Remove all favorites
+       */
+      mutateProps({ favs: [] });
+      expect(wrapper.find("button").at(1).prop("disabled")).toBe(true);
+    });
+    test("Buttons' state changed based on display", () => {
+      wrapper.setProps({
+        posts: Object.assign({}, store, {
+          filter: "",
+          search: [dummyPost],
+          favs:   [dummyPost],
+        }),
+      });
+      wrapper.find("input").at(0).simulate("change", { target: { value: "js" } });
+
+      /**
+       * Initial test with both input and favorites present
+       */
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
+      expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
+
+      /**
+       * Change display to 'favs'
+       */
+      mutateProps({ display: "favs" });
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(false);
+      expect(wrapper.find("button").at(1).prop("disabled")).toBe(true);
+
+      /**
+       * Change display to 'search'
+       */
+      mutateProps({ display: "search", filter: "js-" });
+      expect(wrapper.find("button").at(0).prop("disabled")).toBe(true);
+      expect(wrapper.find("button").at(1).prop("disabled")).toBe(false);
+    });
   });
 });
