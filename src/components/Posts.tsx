@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-
 import React from 'react';
 
 import { Button, CircularProgress } from '@material-ui/core';
@@ -23,7 +21,13 @@ interface IWrapState {
 
 export class Wrapper extends React.Component<IWrapProps, IWrapState> {
   pickPosts = () => {
-    if (this.props.posts.display === 'default') {
+    /**
+     * Yet again, suppressing for ts reasons
+     */
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const { posts, getDummyPosts } = this.props;
+
+    if (posts.display === 'default') {
       return (
         <div>
           <h3>There are currently no posts here</h3>
@@ -33,10 +37,10 @@ export class Wrapper extends React.Component<IWrapProps, IWrapState> {
             color="primary"
             onClick={() => {
               /**
-                     * these functions can't be fixed as typsecript considers them unasignable
-                     * this will not be an issue with regular js
-                     */
-              this.props.getDummyPosts();
+               * these functions can't be fixed as typsecript considers them unasignable
+               * this will not be an issue with regular js
+               */
+              getDummyPosts();
             }}
           >
             Get dummy data
@@ -44,13 +48,13 @@ export class Wrapper extends React.Component<IWrapProps, IWrapState> {
         </div>
       );
     }
-    switch (this.props.posts.status) {
+    switch (posts.status) {
       case 'success':
-        return this.props.posts[this.props.posts.display].map((entry: IPost) => (
+        return posts[posts.display].map((entry: IPost) => (
           <PostCon
             key={entry.id}
             post={entry}
-            favorite={this.props.posts.favs.filter((e: IPost) => entry.id === e.id).length > 0}
+            favorite={posts.favs.filter((e: IPost) => entry.id === e.id).length > 0}
           />
         ));
       case 'fetching':

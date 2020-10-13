@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import React from 'react';
 
@@ -47,7 +45,18 @@ export class Post extends React.Component<IPostProps, IPostState> {
   };
 
   favoriteAction = () => {
-    this.props.setFavorite(this.props.post);
+    /**
+     * this eslint check is suppressed her because of ts
+     * that yet again complains about some dumb shit
+     * namely - variable shadowing
+     *
+     * it thinks setFavorite from interface
+     * may interfere with this setFavorite
+     * which is obviously not true
+     */
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const { post, setFavorite } = this.props;
+    setFavorite(post);
   };
 
   formatDate = (str: string): string => {
@@ -63,16 +72,17 @@ export class Post extends React.Component<IPostProps, IPostState> {
   };
 
   render() {
+    const { post, favorite } = this.props;
     return (
       <Card style={this.card} variant="outlined">
-        <CardHeader title={this.props.post.title} />
+        <CardHeader title={post.title} />
         <CardContent>
-          { this.trimContent(this.props.post.description) }
+          { this.trimContent(post.description) }
         </CardContent>
         <CardActions style={this.favoriteButton}>
-          <span>{ this.formatDate(this.props.post.created_at) }</span>
+          <span>{ this.formatDate(post.created_at) }</span>
           <IconButton aria-label="add to favorites" onClick={this.favoriteAction}>
-            <FavoriteIcon color={this.props.favorite ? 'secondary' : 'action'} />
+            <FavoriteIcon color={favorite ? 'secondary' : 'action'} />
           </IconButton>
         </CardActions>
       </Card>

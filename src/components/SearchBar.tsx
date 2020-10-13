@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-
 import React from 'react';
 
 import { connect } from 'react-redux';
@@ -35,33 +33,51 @@ export class SearchBar extends React.Component<ISearchProps, ISearchState> {
     };
   }
 
-  joinFilter = (): string => `${this.state.description}-${this.state.location}`;
+  joinFilter = (): string => {
+    const { description, location } = this.state;
+    return `${description}-${location}`;
+  };
 
   searchHandler = () => {
-    if (this.joinFilter() === this.props.posts.filter) {
-      this.props.toggleDisplay();
+    /**
+     * yup
+     */
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const { toggleDisplay, fetchPosts, posts } = this.props;
+    const { description, location } = this.state;
+
+    if (this.joinFilter() === posts.filter) {
+      toggleDisplay();
     } else {
-      this.props.fetchPosts(this.state.description, this.state.location);
+      fetchPosts(description, location);
     }
   };
 
   displayFavorites = () => {
-    this.props.toggleDisplay();
+    /**
+     * just the way we like it
+     */
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const { toggleDisplay } = this.props;
+    toggleDisplay();
   };
 
   enterHandler = (e: any) => {
-    if (e.key === 'Enter' && (this.state.location || this.state.description)) {
+    const { location, description } = this.state;
+    if (e.key === 'Enter' && (location || description)) {
       this.searchHandler();
     }
   };
 
   render() {
+    const { location, description } = this.state;
+    const { posts } = this.props;
     return (
       <div>
         <div style={this.style.wrap}>
           <Input
             placeholder="Description"
-            value={this.state.description}
+            value={description}
             onChange={(e) => {
               this.setState({ description: e.target.value });
             }}
@@ -69,7 +85,7 @@ export class SearchBar extends React.Component<ISearchProps, ISearchState> {
           />
           <Input
             placeholder="Location"
-            value={this.state.location}
+            value={location}
             onChange={(e) => {
               this.setState({ location: e.target.value });
             }}
@@ -87,10 +103,10 @@ export class SearchBar extends React.Component<ISearchProps, ISearchState> {
              */
             this.searchHandler();
           }}
-          disabled={!(this.state.location || this.state.description)
-                           || this.props.posts.status === 'fetching'
-                           || ((this.joinFilter() === this.props.posts.filter)
-                                && (this.props.posts.display !== 'favs'))}
+          disabled={!(location || description)
+                           || posts.status === 'fetching'
+                           || ((this.joinFilter() === posts.filter)
+                                && (posts.display !== 'favs'))}
         >
           Get data
         </Button>
@@ -105,9 +121,9 @@ export class SearchBar extends React.Component<ISearchProps, ISearchState> {
              */
             this.displayFavorites();
           }}
-          disabled={this.props.posts.favs.length === 0
-                           || this.props.posts.display === 'favs'
-                           || this.props.posts.status === 'fetching'}
+          disabled={posts.favs.length === 0
+                           || posts.display === 'favs'
+                           || posts.status === 'fetching'}
         >
           Get favorites
         </Button>
