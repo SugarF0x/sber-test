@@ -8,25 +8,29 @@ export function getDummyPosts(): IAction {
 
 export function getPostsByQuery(status: TStatus, data?: IPost[]): IAction {
   switch (status) {
-    case "fetching":
+    case 'fetching':
       return {
         type: 'FETCH_POSTS_START',
-        data
+        data,
       };
-    case "error":
+    case 'error':
       return {
         type: 'FETCH_POSTS_ERROR',
-        data
+        data,
       };
-    case "success":
+    case 'success':
       return {
         type: 'FETCH_POSTS_SUCCESS',
         data,
       };
-    case "not_found":
+    case 'not_found':
       return {
         type: 'FETCH_POSTS_404',
-        data
+        data,
+      };
+    default:
+      return {
+        type: 'STATUS_NOT_FOUND',
       };
   }
 }
@@ -40,26 +44,23 @@ export function setFavorite(post: IPost): IAction {
 
 export function toggleDisplay() {
   return {
-    type: 'TOGGLE_DISPLAY'
-  }
+    type: 'TOGGLE_DISPLAY',
+  };
 }
 
-export const fetchPosts = (desc: string, location: string) => {
-  return function (dispatch: any) {
-    dispatch(getPostsByQuery('fetching'))
-    fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json?description=${ desc }&location=${ location }`,
-          {headers: {origin: 'http://localhost:3000'}}
-    )
-      .then(res => res.json())
-      .then(res => {
-        if (res.length > 0) {
-          dispatch(getPostsByQuery('success', res))
-        } else {
-          dispatch(getPostsByQuery('not_found'))
-        }
-      })
-      .catch(() => {
-        dispatch(getPostsByQuery('error'))
-      });
-  }
-}
+export const fetchPosts = (desc: string, location: string) => (dispatch: any) => {
+  dispatch(getPostsByQuery('fetching'));
+  fetch(`https://cors-anywhere.herokuapp.com/jobs.github.com/positions.json?description=${desc}&location=${location}`,
+    { headers: { origin: 'http://localhost:3000' } })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.length > 0) {
+        dispatch(getPostsByQuery('success', res));
+      } else {
+        dispatch(getPostsByQuery('not_found'));
+      }
+    })
+    .catch(() => {
+      dispatch(getPostsByQuery('error'));
+    });
+};
