@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Posts component Testing Element render tests Render component 1`] = `
+<div>
+  <h1>
+    Posts from GitHub
+  </h1>
+  <Connect(SearchBar) />
+  <div>
+    <h3>
+      There are currently no posts here
+    </h3>
+    <WithStyles(ForwardRef(Button))
+      color="primary"
+      onClick={[Function]}
+      style={
+        Object {
+          "margin": "1rem",
+        }
+      }
+      variant="contained"
+    >
+      Get dummy data
+    </WithStyles(ForwardRef(Button))>
+  </div>
+</div>
+`;

@@ -53,6 +53,7 @@ describe("Post Component Testing", () => {
   describe("Element render tests", () => {
     test("Render component", () => {
       expect(wrapper.length).toBe(1);
+      expect(wrapper).toMatchSnapshot();
     });
     test("Render button", () => {
       expect(wrapper.find("button")).toHaveLength(1);

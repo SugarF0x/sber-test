@@ -58,6 +58,7 @@ describe("Posts component Testing", () => {
   describe("Element render tests", () => {
     test("Render component", () => {
       expect(wrapper.length).toBe(1);
+      expect(wrapper).toMatchSnapshot();
     });
     test("Render SearchBar", () => {
       expect(wrapper.find(SearchBar).length).toBe(1);

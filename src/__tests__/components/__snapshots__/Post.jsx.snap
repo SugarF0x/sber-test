@@ -1,0 +1,401 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Post Component Testing Element render tests Render component 1`] = `
+<Post
+  favorite={false}
+  post={
+    Object {
+      "company": "Hotel Trades Council, AFL-CIO",
+      "company_logo": "https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbE9KIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--a30d608a910769a14438f7e0d7f3a673ca961499/HTC%20logo.jpg",
+      "company_url": "http://www.hotelworkers.org",
+      "created_at": "Sun Sep 06 14:30:27 UTC 2020",
+      "description": "<p>The New York Hotel Trades Council, AFL-CIO, a labor union that represents nearly 40,000 workers in the hotel, gaming, and racing industries in the New York City area, seeks an experienced web developer.</p>
+<p>This COVID crisis has shown us the immense value to our Union of developing a more expansive and sophisticated website. Since March, the number of viewers to our site has increased seven-fold (to as many as 20,000 per day and more) and we are investing our resources accordingly. In fact, we have so many concrete ideas to put the site to new innovative uses, that our one full-time Web Developer has much more work to do than he can possibly handle. Among the new uses we are developing are:</p>
+<p>Conducting secret ballot ratification votes online;
+Providing multi-lingual content to an incredibly diverse membership (the current site supports English, Spanish and Chinese content);
+Mobilizing rank-and-file political action in a private individually personalized Member Section;
+Providing non-union workers with a confidential communication channel with the union and interactive pages allowing them to compare their wages, benefits and working conditions to those enjoyed by unionized workers; and
+Many other applications.</p>
+<p>Our Union constantly seeks new ways to increase our effectiveness through smart use of technology and we are looking for a creative developer to help conceive of, design and implement tools to support the Union in our mission.</p>
+<p>This position offers the prospect of a great career and, as we are a labor union, an excellent benefit package.</p>
+<p>The team currently works remotely from home due to the COVID situation. When things return to normal, we intend to be flexible about remote work, and will consider skilled applicants who don’t live in the New York area.</p>
+<p>Starting salary: $70,000 to $85,000</p>
+<p>Benefits include: Medical, Dental, Optical, and Prescription Drugs with family coverage (including domestic partners); Pension, Pre-paid Legal, Flexible Spending Accounts, Life Cycle Benefits, Long-Term Care Insurance, and other benefits.</p>
+<p>Requirements:
+At least 3 years developing websites using an MVC framework (with preference given to specific knowledge of Laravel PHP framework).
+Strong UI/UX design skills
+Strong javascript skills</p>
+<p>Other useful experience/qualifications:</p>
+<ul>
+<li>Advanced experience managing SQL databases</li>
+<li>Linux server administration</li>
+<li>Networking skills</li>
+<li>Python</li>
+</ul>
+",
+      "how_to_apply": "<p>Please submit a resume, three references and a cover letter to <a href=\\"mailto:careers@nyhtc.org\\">careers@nyhtc.org</a> with the subject line “Web Developer.”  The cover letter should be clear and concise and explain the specific reasons for your interest in the position, and specify (with appropriate explanation) which of each of the listed qualifications you possess and which ones you do not possess.</p>
+<p>The New York Hotel Trades Council, AFL-CIO, is an equal opportunity employer.  All persons regardless of age, race, ethnicity, gender, religious affiliation and sexual orientation are encouraged to apply.</p>
+",
+      "id": "569bfcdc-fad1-4563-ae57-8585831db596",
+      "location": "New York, NY",
+      "title": "Web Developer",
+      "type": "Full Time",
+      "url": "https://jobs.github.com/positions/569bfcdc-fad1-4563-ae57-8585831db596",
+    }
+  }
+  setFavorite={[Function]}
+>
+  <WithStyles(ForwardRef(Card))
+    style={
+      Object {
+        "margin": "1rem",
+      }
+    }
+    variant="outlined"
+  >
+    <ForwardRef(Card)
+      classes={
+        Object {
+          "root": "MuiCard-root",
+        }
+      }
+      style={
+        Object {
+          "margin": "1rem",
+        }
+      }
+      variant="outlined"
+    >
+      <WithStyles(ForwardRef(Paper))
+        className="MuiCard-root"
+        elevation={1}
+        style={
+          Object {
+            "margin": "1rem",
+          }
+        }
+        variant="outlined"
+      >
+        <ForwardRef(Paper)
+          className="MuiCard-root"
+          classes={
+            Object {
+              "elevation0": "MuiPaper-elevation0",
+              "elevation1": "MuiPaper-elevation1",
+              "elevation10": "MuiPaper-elevation10",
+              "elevation11": "MuiPaper-elevation11",
+              "elevation12": "MuiPaper-elevation12",
+              "elevation13": "MuiPaper-elevation13",
+              "elevation14": "MuiPaper-elevation14",
+              "elevation15": "MuiPaper-elevation15",
+              "elevation16": "MuiPaper-elevation16",
+              "elevation17": "MuiPaper-elevation17",
+              "elevation18": "MuiPaper-elevation18",
+              "elevation19": "MuiPaper-elevation19",
+              "elevation2": "MuiPaper-elevation2",
+              "elevation20": "MuiPaper-elevation20",
+              "elevation21": "MuiPaper-elevation21",
+              "elevation22": "MuiPaper-elevation22",
+              "elevation23": "MuiPaper-elevation23",
+              "elevation24": "MuiPaper-elevation24",
+              "elevation3": "MuiPaper-elevation3",
+              "elevation4": "MuiPaper-elevation4",
+              "elevation5": "MuiPaper-elevation5",
+              "elevation6": "MuiPaper-elevation6",
+              "elevation7": "MuiPaper-elevation7",
+              "elevation8": "MuiPaper-elevation8",
+              "elevation9": "MuiPaper-elevation9",
+              "outlined": "MuiPaper-outlined",
+              "root": "MuiPaper-root",
+              "rounded": "MuiPaper-rounded",
+            }
+          }
+          elevation={1}
+          style={
+            Object {
+              "margin": "1rem",
+            }
+          }
+          variant="outlined"
+        >
+          <div
+            className="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+            style={
+              Object {
+                "margin": "1rem",
+              }
+            }
+          >
+            <WithStyles(ForwardRef(CardHeader))
+              title="Web Developer"
+            >
+              <ForwardRef(CardHeader)
+                classes={
+                  Object {
+                    "action": "MuiCardHeader-action",
+                    "avatar": "MuiCardHeader-avatar",
+                    "content": "MuiCardHeader-content",
+                    "root": "MuiCardHeader-root",
+                    "subheader": "MuiCardHeader-subheader",
+                    "title": "MuiCardHeader-title",
+                  }
+                }
+                title="Web Developer"
+              >
+                <div
+                  className="MuiCardHeader-root"
+                >
+                  <div
+                    className="MuiCardHeader-content"
+                  >
+                    <WithStyles(ForwardRef(Typography))
+                      className="MuiCardHeader-title"
+                      component="span"
+                      display="block"
+                      variant="h5"
+                    >
+                      <ForwardRef(Typography)
+                        className="MuiCardHeader-title"
+                        classes={
+                          Object {
+                            "alignCenter": "MuiTypography-alignCenter",
+                            "alignJustify": "MuiTypography-alignJustify",
+                            "alignLeft": "MuiTypography-alignLeft",
+                            "alignRight": "MuiTypography-alignRight",
+                            "body1": "MuiTypography-body1",
+                            "body2": "MuiTypography-body2",
+                            "button": "MuiTypography-button",
+                            "caption": "MuiTypography-caption",
+                            "colorError": "MuiTypography-colorError",
+                            "colorInherit": "MuiTypography-colorInherit",
+                            "colorPrimary": "MuiTypography-colorPrimary",
+                            "colorSecondary": "MuiTypography-colorSecondary",
+                            "colorTextPrimary": "MuiTypography-colorTextPrimary",
+                            "colorTextSecondary": "MuiTypography-colorTextSecondary",
+                            "displayBlock": "MuiTypography-displayBlock",
+                            "displayInline": "MuiTypography-displayInline",
+                            "gutterBottom": "MuiTypography-gutterBottom",
+                            "h1": "MuiTypography-h1",
+                            "h2": "MuiTypography-h2",
+                            "h3": "MuiTypography-h3",
+                            "h4": "MuiTypography-h4",
+                            "h5": "MuiTypography-h5",
+                            "h6": "MuiTypography-h6",
+                            "noWrap": "MuiTypography-noWrap",
+                            "overline": "MuiTypography-overline",
+                            "paragraph": "MuiTypography-paragraph",
+                            "root": "MuiTypography-root",
+                            "srOnly": "MuiTypography-srOnly",
+                            "subtitle1": "MuiTypography-subtitle1",
+                            "subtitle2": "MuiTypography-subtitle2",
+                          }
+                        }
+                        component="span"
+                        display="block"
+                        variant="h5"
+                      >
+                        <span
+                          className="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
+                        >
+                          Web Developer
+                        </span>
+                      </ForwardRef(Typography)>
+                    </WithStyles(ForwardRef(Typography))>
+                  </div>
+                </div>
+              </ForwardRef(CardHeader)>
+            </WithStyles(ForwardRef(CardHeader))>
+            <WithStyles(ForwardRef(CardContent))>
+              <ForwardRef(CardContent)
+                classes={
+                  Object {
+                    "root": "MuiCardContent-root",
+                  }
+                }
+              >
+                <div
+                  className="MuiCardContent-root"
+                >
+                  The New York Hotel Trades Council, AFL-CIO, a labor union that represents nearly 40,000 workers in the hotel, gaming, and racing industries in the New York City area, seeks an experienced web developer.
+                </div>
+              </ForwardRef(CardContent)>
+            </WithStyles(ForwardRef(CardContent))>
+            <WithStyles(ForwardRef(CardActions))
+              style={
+                Object {
+                  "display": "flex",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <ForwardRef(CardActions)
+                classes={
+                  Object {
+                    "root": "MuiCardActions-root",
+                    "spacing": "MuiCardActions-spacing",
+                  }
+                }
+                style={
+                  Object {
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <div
+                  className="MuiCardActions-root MuiCardActions-spacing"
+                  style={
+                    Object {
+                      "display": "flex",
+                      "justifyContent": "space-between",
+                    }
+                  }
+                >
+                  <span>
+                    06.09.2020 at 17:30
+                  </span>
+                  <WithStyles(ForwardRef(IconButton))
+                    aria-label="add to favorites"
+                    onClick={[Function]}
+                  >
+                    <ForwardRef(IconButton)
+                      aria-label="add to favorites"
+                      classes={
+                        Object {
+                          "colorInherit": "MuiIconButton-colorInherit",
+                          "colorPrimary": "MuiIconButton-colorPrimary",
+                          "colorSecondary": "MuiIconButton-colorSecondary",
+                          "disabled": "Mui-disabled",
+                          "edgeEnd": "MuiIconButton-edgeEnd",
+                          "edgeStart": "MuiIconButton-edgeStart",
+                          "label": "MuiIconButton-label",
+                          "root": "MuiIconButton-root",
+                          "sizeSmall": "MuiIconButton-sizeSmall",
+                        }
+                      }
+                      onClick={[Function]}
+                    >
+                      <WithStyles(ForwardRef(ButtonBase))
+                        aria-label="add to favorites"
+                        centerRipple={true}
+                        className="MuiIconButton-root"
+                        disabled={false}
+                        focusRipple={true}
+                        onClick={[Function]}
+                      >
+                        <ForwardRef(ButtonBase)
+                          aria-label="add to favorites"
+                          centerRipple={true}
+                          className="MuiIconButton-root"
+                          classes={
+                            Object {
+                              "disabled": "Mui-disabled",
+                              "focusVisible": "Mui-focusVisible",
+                              "root": "MuiButtonBase-root",
+                            }
+                          }
+                          disabled={false}
+                          focusRipple={true}
+                          onClick={[Function]}
+                        >
+                          <button
+                            aria-label="add to favorites"
+                            className="MuiButtonBase-root MuiIconButton-root"
+                            disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onDragLeave={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseUp={[Function]}
+                            onTouchEnd={[Function]}
+                            onTouchMove={[Function]}
+                            onTouchStart={[Function]}
+                            tabIndex={0}
+                            type="button"
+                          >
+                            <span
+                              className="MuiIconButton-label"
+                            >
+                              <ForwardRef
+                                color="action"
+                              >
+                                <WithStyles(ForwardRef(SvgIcon))
+                                  color="action"
+                                >
+                                  <ForwardRef(SvgIcon)
+                                    classes={
+                                      Object {
+                                        "colorAction": "MuiSvgIcon-colorAction",
+                                        "colorDisabled": "MuiSvgIcon-colorDisabled",
+                                        "colorError": "MuiSvgIcon-colorError",
+                                        "colorPrimary": "MuiSvgIcon-colorPrimary",
+                                        "colorSecondary": "MuiSvgIcon-colorSecondary",
+                                        "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
+                                        "fontSizeLarge": "MuiSvgIcon-fontSizeLarge",
+                                        "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
+                                        "root": "MuiSvgIcon-root",
+                                      }
+                                    }
+                                    color="action"
+                                  >
+                                    <svg
+                                      aria-hidden={true}
+                                      className="MuiSvgIcon-root MuiSvgIcon-colorAction"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                      />
+                                    </svg>
+                                  </ForwardRef(SvgIcon)>
+                                </WithStyles(ForwardRef(SvgIcon))>
+                              </ForwardRef>
+                            </span>
+                            <WithStyles(memo)
+                              center={true}
+                            >
+                              <ForwardRef(TouchRipple)
+                                center={true}
+                                classes={
+                                  Object {
+                                    "child": "MuiTouchRipple-child",
+                                    "childLeaving": "MuiTouchRipple-childLeaving",
+                                    "childPulsate": "MuiTouchRipple-childPulsate",
+                                    "ripple": "MuiTouchRipple-ripple",
+                                    "ripplePulsate": "MuiTouchRipple-ripplePulsate",
+                                    "rippleVisible": "MuiTouchRipple-rippleVisible",
+                                    "root": "MuiTouchRipple-root",
+                                  }
+                                }
+                              >
+                                <span
+                                  className="MuiTouchRipple-root"
+                                >
+                                  <TransitionGroup
+                                    childFactory={[Function]}
+                                    component={null}
+                                    exit={true}
+                                  />
+                                </span>
+                              </ForwardRef(TouchRipple)>
+                            </WithStyles(memo)>
+                          </button>
+                        </ForwardRef(ButtonBase)>
+                      </WithStyles(ForwardRef(ButtonBase))>
+                    </ForwardRef(IconButton)>
+                  </WithStyles(ForwardRef(IconButton))>
+                </div>
+              </ForwardRef(CardActions)>
+            </WithStyles(ForwardRef(CardActions))>
+          </div>
+        </ForwardRef(Paper)>
+      </WithStyles(ForwardRef(Paper))>
+    </ForwardRef(Card)>
+  </WithStyles(ForwardRef(Card))>
+</Post>
+`;
