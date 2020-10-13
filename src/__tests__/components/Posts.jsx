@@ -1,13 +1,10 @@
-import React               from "react";
-import Enzyme, { shallow } from "enzyme";
-import Adapter             from "enzyme-adapter-react-16";
+import React       from "react";
+import { shallow } from "enzyme";
 
 import { Wrapper } from "../../components/Posts";
 // import { Post }    from "../../components/Post";
 import SearchBar   from "../../components/SearchBar";
 import { Button }  from "@material-ui/core";
-
-Enzyme.configure({ adapter: new Adapter() });
 
 /**
  * I am at a loss here

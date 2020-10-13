@@ -1,6 +1,5 @@
-import React             from "react";
-import Enzyme, { mount } from "enzyme";
-import Adapter           from "enzyme-adapter-react-16";
+import React     from "react";
+import { mount } from "enzyme";
 
 import { Post }     from "../../components/Post";
 import {
@@ -9,8 +8,6 @@ import {
   IconButton,
 }                   from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe("Post Component Testing", () => {
   const post = {
