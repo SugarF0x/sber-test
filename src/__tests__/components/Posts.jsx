@@ -2,9 +2,9 @@ import React               from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter             from "enzyme-adapter-react-16";
 
-import { Wrapper } from "./Posts";
-import { Post }    from "./Post";
-import SearchBar   from "./SearchBar";
+import { Wrapper } from "../../components/Posts";
+// import { Post }    from "../../components/Post";
+import SearchBar   from "../../components/SearchBar";
 import { Button }  from "@material-ui/core";
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -49,8 +49,8 @@ describe("Posts component Testing", () => {
 
   function getDummyPosts() {
     wrapper.setProps({
-      posts: Object.assign({}, wrapper.instance().props.posts, { search: [dummyPost], display: "search" }),
-      getDummyPosts: getDummyPosts
+      posts:         Object.assign({}, wrapper.instance().props.posts, { search: [dummyPost], display: "search" }),
+      getDummyPosts: getDummyPosts,
     });
   }
 
@@ -66,9 +66,9 @@ describe("Posts component Testing", () => {
       expect(wrapper.find(SearchBar).length).toBe(1);
     });
     test("Render default display", () => {
-      expect(wrapper.find('h3').text()).toBe('There are currently no posts here');
-      expect(wrapper.find(Button).shallow().text()).toBe('Get dummy data');
-    })
+      expect(wrapper.find("h3").text()).toBe("There are currently no posts here");
+      expect(wrapper.find(Button).shallow().text()).toBe("Get dummy data");
+    });
   });
 
   describe("Element interaction tests", () => {
@@ -78,10 +78,10 @@ describe("Posts component Testing", () => {
        * (default display)
        * Proceeding to button click
        */
-      wrapper.find(Button).shallow().simulate('click');
+      wrapper.find(Button).shallow().simulate("click");
       expect(wrapper.instance().props.posts.display).toBe("search");
       expect(wrapper.instance().props.posts.search[0]).toBe(dummyPost);
       // expect(wrapper.find(Post).length).toBeGreaterThan(0); // TODO: need to somehow see if this actually renders, but dont know how given the shallow render
-    })
-  })
+    });
+  });
 });

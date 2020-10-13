@@ -1,4 +1,4 @@
-import posts from "./posts";
+import posts from "../../store/reducers/posts";
 
 let defaultPosts = {
   status:  "success",
@@ -72,7 +72,7 @@ describe("Redux posts reducer testing", () => {
       });
     });
     test("FETCH_POSTS_START", () => {
-      expect(posts(defaultPosts, { type: "FETCH_POSTS_START", data: 'js-moscow' })).toEqual({
+      expect(posts(defaultPosts, { type: "FETCH_POSTS_START", data: "js-moscow" })).toEqual({
         status:  "fetching",
         search:  [],
         favs:    [],
@@ -111,7 +111,7 @@ describe("Redux posts reducer testing", () => {
       /**
        * Add to favorites
        */
-      let store = posts(defaultPosts, { type: "TO_FAVORITE", data: dummyPost })
+      let store = posts(defaultPosts, { type: "TO_FAVORITE", data: dummyPost });
       expect(store).toEqual({
         status:  "success",
         search:  [],
@@ -130,7 +130,7 @@ describe("Redux posts reducer testing", () => {
         favs:    [],
         filter:  "",
         display: "default",
-      })
+      });
     });
     test("FETCH_FAVORITES_START", () => {
       expect(posts(defaultPosts, { type: "FETCH_FAVORITES_START" })).toEqual({
